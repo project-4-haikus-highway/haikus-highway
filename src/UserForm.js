@@ -1,9 +1,10 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect,useState } from "react";
 
 function UserForm() {
     const [soundsLike, setSoundsLike] = useState([])
     const [userInput, setUserInput] = useState('')
+    const [enteredWord, setEnteredWord] = useState([])
 
     const apiCall = (userInput) =>{
         axios({
@@ -11,15 +12,18 @@ function UserForm() {
             method: 'GET',
             dataResponse: 'json',
             params: {
+                max: 10, //Keep an eye on this number of we don't get the word back on the page
                 sl: userInput,
                 md: 's'
             }
         }).then((res) => {
             console.log(res.data)
             setSoundsLike(res.data)
-            wordSearch()
+            // wordSearch()
         })
     }
+
+
 
     const handleChange = (event) => {
         setUserInput(event.target.value)
@@ -30,20 +34,27 @@ function UserForm() {
         apiCall(userInput)
     
     } 
-    const wordSearch = () => {
-    const copyOfApiData = [...soundsLike]
-    const filteredApiData = copyOfApiData.filter( (wordArray => {
+    useEffect (() => {
+        console.log('hi');
+        const copyOfApiData = [...soundsLike]
+        const filteredApiData = copyOfApiData.filter( (wordArray => {
         return( wordArray.word === userInput)  
-    }))
-    console.log(filteredApiData);
-}
+        }))
+        setEnteredWord(filteredApiData[0])
+        console.log(filteredApiData);
+    },[soundsLike])
+
     return(
 
-        <form action="submit" onSubmit={handleSubmit}>
+        <section><form action="submit" onSubmit={handleSubmit}>
             <label htmlFor=""></label>
             <input type="text" value={userInput} onChange={handleChange} />
             <button type="submit">Search</button>
         </form>
+        <ul>
+            {/* <li>{enteredWord.word} </li> */}
+        </ul>
+        </section>
 
     )
 };
