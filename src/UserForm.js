@@ -6,6 +6,7 @@ function UserForm() {
     const [soundsLike, setSoundsLike] = useState([])
     const [userInput, setUserInput] = useState('')
     const [searchedWord, setSearchedWord] = useState([])
+    const [showWord, setShowWord] = useState(false)
 
     const apiCall = (userInput) =>{
         axios({
@@ -18,7 +19,7 @@ function UserForm() {
                 md: 's'
             }
         }).then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             setSoundsLike(res.data)
             // wordSearch()
         })
@@ -33,7 +34,6 @@ function UserForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         apiCall(userInput)
-    
     } 
     useEffect (() => {
         // console.log('hi');
@@ -42,17 +42,26 @@ function UserForm() {
         return( wordArray.word === userInput)  
         }))
         setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity
-        console.log(filteredApiData[`numSyllable`]);
+        console.log(filteredApiData);
         //eslint-disable-next-line react-hooks/exhaustive-deps
     },[soundsLike])
 
+    const handleAddToHaiku = (event) => {
+        event.preventDefault();
+        console.log('i have been clicked')
+        setShowWord(false)
+        setShowWord(true);
+    }
+
     return(
 
-        <section><form action="submit" onSubmit={handleSubmit}>
-            <label htmlFor=""></label>
-            <input type="text" value={userInput} onChange={handleChange} />
-            <button type="submit">Search</button>
-        </form>
+        <section>
+            <form action="submit" onSubmit={handleSubmit}>
+                <label htmlFor=""></label>
+                <input type="text" value={userInput} onChange={handleChange} />
+                <button type="submit">Search</button>
+            </form>
+            <button onClick={handleAddToHaiku}>add to haiku</button>
         <ul>
             {
                 searchedWord.map((returnedWord) => {
@@ -64,7 +73,12 @@ function UserForm() {
                 })
             }
         </ul>
-        <MakeHaiku numSyllable={searchedWord[`numSyllables`]}/>
+        {
+            showWord === true
+            ?
+            <MakeHaiku searchedWord={searchedWord} setSearchedWord={setSearchedWord} setUserInput={setUserInput}/>
+            : null
+        }
         </section>
 
     )

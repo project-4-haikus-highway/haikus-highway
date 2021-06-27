@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
-function MakeHaiku({numSyllable}) {
+function MakeHaiku({searchedWord, setSearchedWord, setUserInput}) {
     const [line1, setLine1] = useState(5)
     const [line2, setLine2] = useState(7)
     const [line3, setLine3] = useState(5)
 
-    const addWord = (usedSyllables) => {
+
+    useEffect (() => {
+        const usedSyllables = searchedWord[0]['numSyllables']
+        console.log ('this is searchedWord', searchedWord[0]['numSyllables'])
+        
         if( line1 > 0 ){
             setLine1(line1 - usedSyllables)
         } else if ( line2 > 0 ){
@@ -15,10 +19,10 @@ function MakeHaiku({numSyllable}) {
         } else {
             console.log('you are done');
         }
-        
+        setSearchedWord([]);
+        setUserInput('');
+    },[])
 
-    }
-    addWord(numSyllable)
     return (
         <div>
             <ul>
