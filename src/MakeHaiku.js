@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function MakeHaiku() {
+function MakeHaiku({numSyllable}) {
     const [line1, setLine1] = useState(5)
     const [line2, setLine2] = useState(7)
     const [line3, setLine3] = useState(5)
@@ -15,9 +15,10 @@ function MakeHaiku() {
         } else {
             console.log('you are done');
         }
+        
 
     }
-
+    addWord(numSyllable)
     return (
         <div>
             <ul>

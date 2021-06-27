@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <h1>Haikus Highway</h1>
       <UserForm />
-      <MakeHaiku />
+      {/* <MakeHaiku /> */}
     </div>
   );
 }

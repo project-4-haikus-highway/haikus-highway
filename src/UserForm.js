@@ -1,10 +1,11 @@
 import axios from "axios";
+import MakeHaiku from './MakeHaiku';
 import { useEffect,useState } from "react";
 
 function UserForm() {
     const [soundsLike, setSoundsLike] = useState([])
     const [userInput, setUserInput] = useState('')
-    const [enteredWord, setEnteredWord] = useState([])
+    const [searchedWord, setSearchedWord] = useState([])
 
     const apiCall = (userInput) =>{
         axios({
@@ -35,13 +36,14 @@ function UserForm() {
     
     } 
     useEffect (() => {
-        console.log('hi');
+        // console.log('hi');
         const copyOfApiData = [...soundsLike]
         const filteredApiData = copyOfApiData.filter( (wordArray => {
         return( wordArray.word === userInput)  
         }))
-        setEnteredWord(filteredApiData[0])
-        console.log(filteredApiData);
+        setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity
+        console.log(filteredApiData[`numSyllable`]);
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     },[soundsLike])
 
     return(
@@ -52,8 +54,17 @@ function UserForm() {
             <button type="submit">Search</button>
         </form>
         <ul>
-            {/* <li>{enteredWord.word} </li> */}
+            {
+                searchedWord.map((returnedWord) => {
+                    return(
+                        <li>
+                            <p>{returnedWord.word}</p>
+                        </li>
+                    )
+                })
+            }
         </ul>
+        <MakeHaiku numSyllable={searchedWord[`numSyllables`]}/>
         </section>
 
     )
