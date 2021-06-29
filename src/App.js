@@ -1,4 +1,4 @@
-// import UserForm from './UserForm';
+import UserForm from './UserForm';
 // import MakeHaiku from './MakeHaiku';
 
 import './Sass/App.scss';
@@ -6,9 +6,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
-  // state to store axios return for searched word and other similar words
-  const [soundsLike, setSoundsLike] = useState([])
-
   // state to handle the word the user is searching
   const [userInput, setUserInput] = useState('')
 
@@ -27,30 +24,6 @@ function App() {
 
   // state for filtered frequently followed
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
-
-  const apiCall = (userInput) => {
-    axios({
-      url: 'https://api.datamuse.com/words?',
-      method: 'GET',
-      dataResponse: 'json',
-      params: {
-        max: 10, //Keep an eye on this number of we don't get the word back on the page
-        sl: userInput,
-        md: 's'
-      }
-    }).then((res) => {
-      setSoundsLike(res.data);
-      userInputFilter(res.data);
-    })
-  }
-
-  const userInputFilter = (apiData) => {
-    const copyOfApiData = [...apiData]
-    const filteredApiData = copyOfApiData.filter((wordArray => {
-      return (wordArray.word === userInput)
-    }))
-    setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
-  }
   
   useEffect( () => {
     axios({
@@ -93,23 +66,6 @@ function App() {
     console.log('this is this', filteredSuggestedWords);
   }
 
-  const handleChange = (event) => {
-    const input = event.target.value.toLowerCase()
-    setUserInput(input)
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    apiCall(userInput)
-  }
-
-
-  const handleAddToHaiku = (event) => {
-    event.preventDefault();
-    console.log('i have been clicked')
-    updateHaiku();
-  }
-
   const updateHaiku = () => {
     const usedSyllables = searchedWord[0]['numSyllables']
     const usedWord = searchedWord[0]['word']
@@ -148,26 +104,25 @@ function App() {
     // setUserInput('');   
   }
 
+  const handleAddToHaiku = (event) => {
+    event.preventDefault();
+    console.log('i have been clicked')
+    updateHaiku();
+  }
+
   return (
     <div className="App">
       <h1>Haikus Highway</h1>
-      <form action="submit" onSubmit={handleSubmit}>
-        <label htmlFor=""></label>
-        <input type="text" value={userInput} onChange={handleChange} />
-        <button type="submit">Search</button>
-      </form>
-      <ul className="searchedWord">
-        {
-          searchedWord.map((returnedWord, index) => {
-            return (
-              <li key={index}>
-                <p>Click on the word to add to your haiku</p>
-                <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
-              </li>
-            )
-          })
-        }
-      </ul>
+
+      {/* CALLING USERFORM COMPONENT AND PASSING THE PROPS */}
+      <UserForm 
+        searchedWord={searchedWord}
+        setSearchedWord={setSearchedWord}
+        userInput={userInput}
+        setUserInput={setUserInput}
+        handleAddToHaiku={handleAddToHaiku}
+      />
+      
       <div className="suggestedWords">
         <ul>
           {
@@ -198,7 +153,6 @@ function App() {
           <p>{line3}</p>
         </div>
       </div>
-
     </div>
   );
 

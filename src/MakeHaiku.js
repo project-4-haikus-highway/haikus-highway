@@ -1,22 +1,16 @@
+// import { useState } from 'react';
+
 // function MakeHaiku() {
+//   // pass in Line1, 2 and 3 also setLine1,2,3...
+//   // we need searched word useState in here
+//     // currentLine, setCurrentLine
+//     // 
+//   // useStates for Haiku building
+
+
+
 //   return(
-//     <div className="haiku">
-//         <div className="haikuHeading">
-//           <h2>Here is your Haiku</h2>
-//         </div>
-//         <div className="haikuLine">
-//           <p>{haikuLine1}</p>
-//           <p>{line1}</p>
-//         </div>
-//         <div className="haikuLine">
-//           <p>{haikuLine2}</p>
-//           <p>{line2}</p>
-//         </div>
-//         <div className="haikuLine">
-//           <p>{haikuLine3}</p>
-//           <p>{line3}</p>
-//         </div>
-//       </div>
+
 //   )
 // }
 
