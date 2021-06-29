@@ -1,7 +1,8 @@
 
 // import UserForm from './UserForm';
 // import MakeHaiku from './MakeHaiku';
-import './App.css';
+
+import './Sass/App.scss';
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -108,7 +109,7 @@ function App() {
         <button type="submit">Search</button>
       </form>
       <button onClick={handleAddToHaiku}>add to haiku</button>
-      <ul>
+      <ul className="searchedWord">
         {
           searchedWord.map((returnedWord) => {
             return (
@@ -120,7 +121,7 @@ function App() {
           })
         }
       </ul>
-      <ul>
+      <ul className="haiku">
         <li>
           <p>Here is your Haiku</p>
         </li>
