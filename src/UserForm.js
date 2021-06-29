@@ -1,6 +1,7 @@
 // import { useState } from 'react';
 import axios from "axios";
 
+
 function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, handleAddToHaiku} ) {
     // state to store axios return for searched word and other similar words
   // const [soundsLike, setSoundsLike] = useState([]);
@@ -25,6 +26,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
     const copyOfApiData = [...apiData]
     const filteredApiData = copyOfApiData.filter((wordArray => {
       return (wordArray.word === userInput)
+
     }))
     setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
   }
