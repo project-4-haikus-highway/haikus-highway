@@ -1,8 +1,7 @@
 import UserForm from './UserForm';
+import RecommendedWords from './RecommendedWords';
 // import MakeHaiku from './MakeHaiku';
-
 import './Sass/App.scss';
-import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -18,53 +17,6 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
-
-  // for second APi call
-  const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
-
-  // state for filtered frequently followed
-  const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
-  
-  useEffect( () => {
-    axios({
-      url: 'https://api.datamuse.com/words?',
-      method: 'GET',
-      dataResponse: 'json',
-      params: {
-        max: 10, //Keep an eye on this number of we don't get the word back on the page
-        rel_bga: userInput,
-        rel_trg: userInput,
-        md: 's'
-      }
-    }).then((response) => {
-      setFrequentlyFollowed(response.data)
-      filterFreqFol(response.data)
-      console.log('I am new thingy', response.data);
-      setUserInput('');
-    })
-  }, [line1, line2, line3])
-
-  const filterFreqFol = (secondApiData) => {
-    const suggestedWords = [...secondApiData]
-    console.log(line1, line2, line3);
-    let filteredSuggestedWords = []
-      if (currentLine === 1) {
-        filteredSuggestedWords = suggestedWords.filter((wordArray => {
-          return (wordArray.numSyllables <= line1)
-        }))
-      } else if (currentLine === 2) {
-        filteredSuggestedWords = suggestedWords.filter((wordArray => {
-          return (wordArray.numSyllables <= line2)
-        }))
-      } else if (currentLine === 3) {
-        filteredSuggestedWords = suggestedWords.filter((wordArray => {
-          return (wordArray.numSyllables <= line3)
-        }))
-      }
-
-    setFilterFrequentFollow(filteredSuggestedWords);
-    console.log('this is this', filteredSuggestedWords);
-  }
 
   const updateHaiku = () => {
     const usedSyllables = searchedWord[0]['numSyllables']
@@ -99,9 +51,7 @@ function App() {
     } else if ((line3 - usedSyllables) < 0 && currentLine === 3) {
         alert("you can't add this word")
     }
-    // secondApiCall(usedWord);
     setSearchedWord([]);
-    // setUserInput('');   
   }
 
   const handleAddToHaiku = (event) => {
@@ -114,7 +64,7 @@ function App() {
     <div className="App">
       <h1>Haikus Highway</h1>
 
-      {/* CALLING USERFORM COMPONENT AND PASSING THE PROPS */}
+      {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
       <UserForm 
         searchedWord={searchedWord}
         setSearchedWord={setSearchedWord}
@@ -122,20 +72,17 @@ function App() {
         setUserInput={setUserInput}
         handleAddToHaiku={handleAddToHaiku}
       />
-      
-      <div className="suggestedWords">
-        <ul>
-          {
-            filterFrequentFollow.map((wordSuggestion, index) => {
-              return (
-                <li key={index}>
-                  {wordSuggestion.word}
-                </li>
-              )
-            })
-          }
-        </ul>
-      </div>
+
+      {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
+      <RecommendedWords
+        currentLine={currentLine}
+        line1={line1}
+        line2={line2}
+        line3={line3}
+        userInput={userInput}
+        setUserInput={setUserInput}
+      />
+
       <div className="haiku">
         <div className="haikuHeading">
           <h2>Here is your Haiku</h2>
@@ -155,8 +102,6 @@ function App() {
       </div>
     </div>
   );
-
-
 }
 
 export default App;
