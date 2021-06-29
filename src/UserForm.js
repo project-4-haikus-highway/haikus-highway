@@ -1,51 +1,68 @@
+// import { useState } from 'react';
 import axios from "axios";
-import { useState } from "react";
 
-function UserForm() {
-    const [soundsLike, setSoundsLike] = useState([])
-    const [userInput, setUserInput] = useState('')
 
-    const apiCall = (userInput) =>{
-        axios({
-            url: 'https://api.datamuse.com/words?',
-            method: 'GET',
-            dataResponse: 'json',
-            params: {
-                sl: userInput,
-                md: 's'
-            }
-        }).then((res) => {
-            console.log(res.data)
-            setSoundsLike(res.data)
-            wordSearch()
-        })
-    }
+function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, handleAddToHaiku} ) {
+    // state to store axios return for searched word and other similar words
+  // const [soundsLike, setSoundsLike] = useState([]);
 
-    const handleChange = (event) => {
-        setUserInput(event.target.value)
-    }
+  const apiCall = (userInput) => {
+    axios({
+      url: 'https://api.datamuse.com/words?',
+      method: 'GET',
+      dataResponse: 'json',
+      params: {
+        max: 10, //Keep an eye on this number of we don't get the word back on the page
+        sl: userInput,
+        md: 's'
+      }
+    }).then((res) => {
+      // setSoundsLike(res.data);
+      userInputFilter(res.data);
+    })
+  }
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        apiCall(userInput)
-    
-    } 
-    const wordSearch = () => {
-    const copyOfApiData = [...soundsLike]
-    const filteredApiData = copyOfApiData.filter( (wordArray => {
-        return( wordArray.word === userInput)  
+  const userInputFilter = (apiData) => {
+    const copyOfApiData = [...apiData]
+    const filteredApiData = copyOfApiData.filter((wordArray => {
+      return (wordArray.word === userInput)
+
     }))
-    console.log(filteredApiData);
+    setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
+  }
+
+  const handleChange = (event) => {
+    const input = event.target.value.toLowerCase()
+    setUserInput(input)
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    apiCall(userInput)
+  }
+
+  return(
+    <div>
+      <form action="submit" onSubmit={handleSubmit}>
+        <label htmlFor=""></label>
+        <input type="text" value={userInput} onChange={handleChange} />
+        <button type="submit">Search</button>
+      </form>
+      <ul className="searchedWord">
+      {
+        searchedWord.map((returnedWord, index) => {
+          return (
+            <li key={index}>
+              <p>Click on the word to add to your haiku</p>
+              <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
+            </li>
+          )
+        })
+      }
+      </ul>
+    </div>
+  )
+
 }
-    return(
 
-        <form action="submit" onSubmit={handleSubmit}>
-            <label htmlFor=""></label>
-            <input type="text" value={userInput} onChange={handleChange} />
-            <button type="submit">Search</button>
-        </form>
-
-    )
-};
-
-export default UserForm
+export default UserForm;
