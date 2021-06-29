@@ -2,7 +2,7 @@ import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
 // import MakeHaiku from './MakeHaiku';
 import './Sass/App.scss';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 function App() {
   // state to handle the word the user is searching
@@ -20,8 +20,8 @@ function App() {
 
   const updateHaiku = () => {
     const usedSyllables = searchedWord[0]['numSyllables']
-    const usedWord = searchedWord[0]['word']
-    console.log('this is searchedWord', searchedWord[0]['numSyllables'])
+    // const usedWord = searchedWord[0]['word']
+    // console.log('this is searchedWord', searchedWord[0]['numSyllables'])
 
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
       setLine1(line1 - usedSyllables)

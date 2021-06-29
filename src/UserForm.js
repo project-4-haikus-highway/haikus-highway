@@ -1,9 +1,9 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import axios from "axios";
 
 function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, handleAddToHaiku} ) {
     // state to store axios return for searched word and other similar words
-  const [soundsLike, setSoundsLike] = useState([]);
+  // const [soundsLike, setSoundsLike] = useState([]);
 
   const apiCall = (userInput) => {
     axios({
@@ -16,7 +16,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
         md: 's'
       }
     }).then((res) => {
-      setSoundsLike(res.data);
+      // setSoundsLike(res.data);
       userInputFilter(res.data);
     })
   }

@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 
 function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUserInput } ) {
 
-   // for second APi call
-  const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
+  //  // for second APi call
+  // const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
 
   // state for filtered frequently followed
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
@@ -21,17 +21,18 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
         md: 's'
       }
     }).then((response) => {
-      setFrequentlyFollowed(response.data)
+      // setFrequentlyFollowed(response.data)
       filterFreqFol(response.data)
       console.log('I am new thingy', response.data);
       setUserInput('');
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [line1, line2, line3])
 
   const filterFreqFol = (secondApiData) => {
     const suggestedWords = [...secondApiData]
     console.log(line1, line2, line3);
-    
+
     let filteredSuggestedWords = []
       if (currentLine === 1) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
