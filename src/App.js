@@ -52,24 +52,28 @@ function App() {
     setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
   }
   
-  const secondApiCall = (addedWord) => {
+  useEffect( () => {
     axios({
       url: 'https://api.datamuse.com/words?',
       method: 'GET',
       dataResponse: 'json',
       params: {
         max: 10, //Keep an eye on this number of we don't get the word back on the page
-        rel_bga: addedWord,
+        rel_bga: userInput,
+        rel_trg: userInput,
         md: 's'
       }
     }).then((response) => {
       setFrequentlyFollowed(response.data)
       filterFreqFol(response.data)
+      console.log('I am new thingy', response.data);
+      setUserInput('');
     })
-  }
+  }, [line1, line2, line3])
 
   const filterFreqFol = (secondApiData) => {
     const suggestedWords = [...secondApiData]
+    console.log(line1, line2, line3);
     let filteredSuggestedWords = []
       if (currentLine === 1) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
@@ -139,11 +143,10 @@ function App() {
     } else if ((line3 - usedSyllables) < 0 && currentLine === 3) {
         alert("you can't add this word")
     }
-    
-    secondApiCall(usedWord);
+    // secondApiCall(usedWord);
     setSearchedWord([]);
-    setUserInput('');
-  };
+    // setUserInput('');   
+  }
 
   return (
     <div className="App">
@@ -165,6 +168,19 @@ function App() {
           })
         }
       </ul>
+      <div className="suggestedWords">
+        <ul>
+          {
+            filterFrequentFollow.map((wordSuggestion, index) => {
+              return (
+                <li key={index}>
+                  {wordSuggestion.word}
+                </li>
+              )
+            })
+          }
+        </ul>
+      </div>
       <div className="haiku">
         <div className="haikuHeading">
           <h2>Here is your Haiku</h2>
