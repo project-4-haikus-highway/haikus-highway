@@ -1,4 +1,3 @@
-
 // import UserForm from './UserForm';
 // import MakeHaiku from './MakeHaiku';
 
@@ -9,8 +8,10 @@ import { useEffect, useState } from "react";
 function App() {
   // state to store axios return for searched word and other similar words
   const [soundsLike, setSoundsLike] = useState([])
+
   // state to handle the word the user is searching
   const [userInput, setUserInput] = useState('')
+
   // contains the filtered data from API call (object with userInput word info)
   const [searchedWord, setSearchedWord] = useState([])
   const [line1, setLine1] = useState(5)
@@ -20,6 +21,12 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+
+  // for second APi call
+  const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
+
+  // state for filtered frequently followed
+  const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
 
   const apiCall = (userInput) => {
     axios({
@@ -32,10 +39,55 @@ function App() {
         md: 's'
       }
     }).then((res) => {
-      setSoundsLike(res.data)
+      setSoundsLike(res.data);
+      userInputFilter(res.data);
     })
   }
 
+  const userInputFilter = (apiData) => {
+    const copyOfApiData = [...apiData]
+    const filteredApiData = copyOfApiData.filter((wordArray => {
+      return (wordArray.word === userInput)
+    }))
+    setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
+  }
+  
+  const secondApiCall = (addedWord) => {
+    axios({
+      url: 'https://api.datamuse.com/words?',
+      method: 'GET',
+      dataResponse: 'json',
+      params: {
+        max: 10, //Keep an eye on this number of we don't get the word back on the page
+        rel_bga: addedWord,
+        md: 's'
+      }
+    }).then((response) => {
+      setFrequentlyFollowed(response.data)
+      filterFreqFol(response.data)
+    })
+  }
+
+  const filterFreqFol = (secondApiData) => {
+    const suggestedWords = [...secondApiData]
+    let filteredSuggestedWords = []
+      if (currentLine === 1) {
+        filteredSuggestedWords = suggestedWords.filter((wordArray => {
+          return (wordArray.numSyllables <= line1)
+        }))
+      } else if (currentLine === 2) {
+        filteredSuggestedWords = suggestedWords.filter((wordArray => {
+          return (wordArray.numSyllables <= line2)
+        }))
+      } else if (currentLine === 3) {
+        filteredSuggestedWords = suggestedWords.filter((wordArray => {
+          return (wordArray.numSyllables <= line3)
+        }))
+      }
+
+    setFilterFrequentFollow(filteredSuggestedWords);
+    console.log('this is this', filteredSuggestedWords);
+  }
 
   const handleChange = (event) => {
     const input = event.target.value.toLowerCase()
@@ -47,15 +99,6 @@ function App() {
     apiCall(userInput)
   }
 
-  useEffect(() => {
-    const copyOfApiData = [...soundsLike]
-    const filteredApiData = copyOfApiData.filter((wordArray => {
-      return (wordArray.word === userInput)
-    }))
-    setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity
-  
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [soundsLike])
 
   const handleAddToHaiku = (event) => {
     event.preventDefault();
@@ -65,6 +108,7 @@ function App() {
 
   const updateHaiku = () => {
     const usedSyllables = searchedWord[0]['numSyllables']
+    const usedWord = searchedWord[0]['word']
     console.log('this is searchedWord', searchedWord[0]['numSyllables'])
 
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
@@ -95,7 +139,8 @@ function App() {
     } else if ((line3 - usedSyllables) < 0 && currentLine === 3) {
         alert("you can't add this word")
     }
-  
+    
+    secondApiCall(usedWord);
     setSearchedWord([]);
     setUserInput('');
   };
@@ -108,39 +153,40 @@ function App() {
         <input type="text" value={userInput} onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
-      <button onClick={handleAddToHaiku}>add to haiku</button>
       <ul className="searchedWord">
         {
-          searchedWord.map((returnedWord) => {
+          searchedWord.map((returnedWord, index) => {
             return (
-              <li>
-                <p>You have searched for</p>
-                <p>{returnedWord.word}</p>
+              <li key={index}>
+                <p>Click on the word to add to your haiku</p>
+                <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
               </li>
             )
           })
         }
       </ul>
-      <ul className="haiku">
-        <li>
-          <p>Here is your Haiku</p>
-        </li>
-        <li>
+      <div className="haiku">
+        <div className="haikuHeading">
+          <h2>Here is your Haiku</h2>
+        </div>
+        <div className="haikuLine">
           <p>{haikuLine1}</p>
           <p>{line1}</p>
-        </li>
-        <li>
+        </div>
+        <div className="haikuLine">
           <p>{haikuLine2}</p>
           <p>{line2}</p>
-        </li>
-        <li>
+        </div>
+        <div className="haikuLine">
           <p>{haikuLine3}</p>
           <p>{line3}</p>
-        </li>
-      </ul>
+        </div>
+      </div>
 
     </div>
   );
+
+
 }
 
 export default App;
