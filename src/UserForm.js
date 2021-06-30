@@ -1,10 +1,12 @@
-// import { useState } from 'react';
+import { useState } from 'react';
 import axios from "axios";
 
 
 function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, handleAddToHaiku} ) {
     // state to store axios return for searched word and other similar words
   // const [soundsLike, setSoundsLike] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(false)
 
   const apiCall = (userInput) => {
     axios({
@@ -20,7 +22,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
       // setSoundsLike(res.data);
       console.log(res.data);
       userInputFilter(res.data);
-
+      setIsLoading(false);
     })
   }
 
@@ -40,27 +42,32 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
   const handleSubmit = (event) => {
     event.preventDefault();
     apiCall(userInput)
+    setIsLoading(true)
   }
 
   return(
     <div>
+
       <form action="submit" onSubmit={handleSubmit}>
         <label htmlFor=""></label>
         <input type="text" value={userInput} onChange={handleChange} />
         <button type="submit">Search</button>
       </form>
-      <ul className="searchedWord">
       {
-        searchedWord.map((returnedWord, index) => {
-          return (
-            <li key={index}>
-              <p>Click on the word to add to your haiku</p>
-              <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
-            </li>
-          )
-        })
+        isLoading ? <p>Loading...</p> :
+        <ul className="searchedWord">
+        {
+          searchedWord.map((returnedWord, index) => {
+            return (
+              <li key={index}>
+                <p>Click on the word to add to your haiku</p>
+                <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
+              </li>
+            )
+          })
+        }
+        </ul>
       }
-      </ul>
     </div>
   )
 
