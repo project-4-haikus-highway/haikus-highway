@@ -17,6 +17,7 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+  
 
   const updateHaiku = () => {
     const usedSyllables = searchedWord[0]['numSyllables']
