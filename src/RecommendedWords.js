@@ -8,6 +8,7 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
 
   // state for filtered frequently followed
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect( () => {
     axios({
@@ -25,6 +26,7 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
       filterFreqFol(response.data)
       console.log('I am new thingy', response.data);
       setUserInput('');
+      setIsLoading(false);
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [line1, line2, line3])
@@ -54,17 +56,20 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
 
   return (
     <div className="suggestedWords">
-      <ul>
-        {
-          filterFrequentFollow.map((wordSuggestion, index) => {
-            return (
-              <li key={index}>
-                {wordSuggestion.word}
-              </li>
-            )
-          })
-        }
-      </ul>
+      {
+        isLoading ? <p>Loading...</p> :
+        <ul>
+          {
+            filterFrequentFollow.map((wordSuggestion, index) => {
+              return (
+                <li className="returnedWords" key={index}>
+                  {wordSuggestion.word}
+                </li>
+              )
+            })
+          }
+        </ul>
+      }
     </div>
   )
 } 

@@ -1,8 +1,10 @@
 import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
+import Alerts from './Alerts';
 // import MakeHaiku from './MakeHaiku';
 import './Sass/App.scss';
 import { useState } from "react";
+import bg from './Assets/bg.mp4'
 
 function App() {
   // state to handle the word the user is searching
@@ -17,8 +19,11 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+  const [appearHaiku, setAppearHaiku] = useState(false)
+  const [showAlert, setShowAlert] = useState(false)
 
   const updateHaiku = () => {
+    setAppearHaiku(true)
     const usedSyllables = searchedWord[0]['numSyllables']
     // const usedWord = searchedWord[0]['word']
     // console.log('this is searchedWord', searchedWord[0]['numSyllables'])
@@ -31,7 +36,7 @@ function App() {
         setHaikuLine1(haikuLine1 + ' ' + userInput)
         setCurrentLine(2)
     } else if ((line1 - usedSyllables) < 0 && currentLine === 1) {
-        alert("you can't add this word")
+        setShowAlert(true)
     } else if ((line2 - usedSyllables) > 0 && currentLine === 2) {
         setLine2(line2 - usedSyllables)
         setHaikuLine2(haikuLine2 + ' ' + userInput)
@@ -40,7 +45,7 @@ function App() {
         setHaikuLine2(haikuLine2 + ' ' + userInput)
         setCurrentLine(3)
     } else if ((line2 - usedSyllables) < 0 && currentLine === 2) {
-        alert("you can't add this word")
+        setShowAlert(true)
     } else if ((line3 - usedSyllables) > 0 && currentLine === 3) {
         setLine3(line3 - usedSyllables)
         setHaikuLine3(haikuLine3 + ' ' + userInput)
@@ -49,7 +54,7 @@ function App() {
         setHaikuLine3(haikuLine3 + ' ' + userInput)
         alert('you are done!')
     } else if ((line3 - usedSyllables) < 0 && currentLine === 3) {
-        alert("you can't add this word")
+        setShowAlert(true)
     }
     setSearchedWord([]);
   }
@@ -62,44 +67,63 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Haikus Highway</h1>
 
+      <video autoPlay loop muted>
+          <source src={bg} type="video/mp4"/>
+      </video>
+
+      <div className="content wrapper">
+        <header>
+          <h1>Haikus Highway</h1>
+        </header>
+      
       {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
-      <UserForm 
-        searchedWord={searchedWord}
-        setSearchedWord={setSearchedWord}
-        userInput={userInput}
-        setUserInput={setUserInput}
-        handleAddToHaiku={handleAddToHaiku}
-      />
+      <main>
+        <UserForm 
+          searchedWord={searchedWord}
+          setSearchedWord={setSearchedWord}
+          userInput={userInput}
+          setUserInput={setUserInput}
+          handleAddToHaiku={handleAddToHaiku}
+        />
+        {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
+        <RecommendedWords
+          currentLine={currentLine}
+          line1={line1}
+          line2={line2}
+          line3={line3}
+          userInput={userInput}
+          setUserInput={setUserInput}
+        />
 
-      {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
-      <RecommendedWords
-        currentLine={currentLine}
-        line1={line1}
-        line2={line2}
-        line3={line3}
-        userInput={userInput}
-        setUserInput={setUserInput}
-      />
-
-      <div className="haiku">
-        <div className="haikuHeading">
-          <h2>Here is your Haiku</h2>
-        </div>
-        <div className="haikuLine">
-          <p>{haikuLine1}</p>
-          <p>{line1}</p>
-        </div>
-        <div className="haikuLine">
-          <p>{haikuLine2}</p>
-          <p>{line2}</p>
-        </div>
-        <div className="haikuLine">
-          <p>{haikuLine3}</p>
-          <p>{line3}</p>
-        </div>
-      </div>
+      {appearHaiku ?
+        <>
+        {showAlert === true
+        ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
+        : null}
+        
+          <div className="haiku">
+            <div className="haikuHeading">
+              <h2>Here is your Haiku</h2>
+              <p># Syllable(s) left</p>
+            </div>
+            <div className="haikuLine">
+              <p>{haikuLine1}</p>
+              <p>{line1}</p>
+            </div>
+            <div className="haikuLine">
+              <p>{haikuLine2}</p>
+              <p>{line2}</p>
+            </div>
+            <div className="haikuLine">
+              <p>{haikuLine3}</p>
+              <p>{line3}</p>
+            </div>
+          </div> 
+          </>
+          : null}
+        </main>
+      </div> 
     </div>
   );
 }
