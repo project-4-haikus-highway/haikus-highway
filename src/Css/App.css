@@ -1,0 +1,52 @@
+.App {
+  text-align: center;
+}
+
+body {
+  font-size: 125%;
+  font-family: "Barlow", sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+.wrapper {
+  max-width: 1280px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+a,
+li,
+ul,
+h1,
+p {
+  padding: 0;
+  margin: 0;
+}
+
+h1 {
+  font-family: "Merienda", cursive;
+  margin: 40px 0;
+  font-size: 4rem;
+}
+
+button {
+  padding: 8px 12px;
+  margin: 10px 5px;
+  text-transform: uppercase;
+}
+
+input {
+  padding: 8px 12px;
+}
+
+.haiku li {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+.haiku p {
+  margin: 10px;
+}
