@@ -19,7 +19,7 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
-  const [apperHaiku, setAppearHaiku] = useState(false)
+  const [appearHaiku, setAppearHaiku] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
 
   const updateHaiku = () => {
@@ -95,10 +95,10 @@ function App() {
           userInput={userInput}
           setUserInput={setUserInput}
         />
-       
-      {apperHaiku ?
-        
-       {showAlert === true
+
+      {appearHaiku ?
+        <>
+        {showAlert === true
         ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
         : null}
         
@@ -119,7 +119,9 @@ function App() {
               <p>{haikuLine3}</p>
               <p>{line3}</p>
             </div>
-          </div> : null}
+          </div> 
+          </>
+          : null}
         </main>
       </div> 
     </div>
