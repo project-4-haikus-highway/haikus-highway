@@ -1,8 +1,10 @@
 import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
+import Alerts from './Alerts';
 // import MakeHaiku from './MakeHaiku';
 import './Sass/App.scss';
 import { useState } from "react";
+
 
 function App() {
   // state to handle the word the user is searching
@@ -17,6 +19,7 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+  const [showAlert, setShowAlert] = useState(false)
 
   const updateHaiku = () => {
     const usedSyllables = searchedWord[0]['numSyllables']
@@ -31,7 +34,7 @@ function App() {
         setHaikuLine1(haikuLine1 + ' ' + userInput)
         setCurrentLine(2)
     } else if ((line1 - usedSyllables) < 0 && currentLine === 1) {
-        alert("you can't add this word")
+        setShowAlert(true)
     } else if ((line2 - usedSyllables) > 0 && currentLine === 2) {
         setLine2(line2 - usedSyllables)
         setHaikuLine2(haikuLine2 + ' ' + userInput)
@@ -40,7 +43,7 @@ function App() {
         setHaikuLine2(haikuLine2 + ' ' + userInput)
         setCurrentLine(3)
     } else if ((line2 - usedSyllables) < 0 && currentLine === 2) {
-        alert("you can't add this word")
+        setShowAlert(true)
     } else if ((line3 - usedSyllables) > 0 && currentLine === 3) {
         setLine3(line3 - usedSyllables)
         setHaikuLine3(haikuLine3 + ' ' + userInput)
@@ -49,7 +52,7 @@ function App() {
         setHaikuLine3(haikuLine3 + ' ' + userInput)
         alert('you are done!')
     } else if ((line3 - usedSyllables) < 0 && currentLine === 3) {
-        alert("you can't add this word")
+        setShowAlert(true)
     }
     setSearchedWord([]);
   }
@@ -82,6 +85,10 @@ function App() {
         userInput={userInput}
         setUserInput={setUserInput}
       />
+
+      {showAlert === true
+        ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
+        : null}
 
       <div className="haiku">
         <div className="haikuHeading">
