@@ -1,0 +1,39 @@
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    border: 0;
+    padding: 0;
+    white-space: nowrap;
+    clip-path: inset(100%);
+    clip: rect(0 0 0 0);
+    overflow: hidden;
+}
+
+.alertParent {
+    position: fixed;
+    top: 40vh;
+    right: 25vw;
+    left: 25vw;
+}
+
+.alert {
+    height: 50%;
+    background-color: $secondary;
+    border: solid black 1px;
+    border-radius: 10px;
+    padding: 40px;
+    position: relative;
+    button {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: none;
+        background: transparent;
+        cursor: pointer;
+    }
+    button:hover {
+        color: $tertiary;
+    }
+}
