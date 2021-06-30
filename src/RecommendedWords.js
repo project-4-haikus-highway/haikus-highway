@@ -58,7 +58,7 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
         {
           filterFrequentFollow.map((wordSuggestion, index) => {
             return (
-              <li key={index}>
+              <li className="returnedWords" key={index}>
                 {wordSuggestion.word}
               </li>
             )
