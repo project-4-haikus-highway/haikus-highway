@@ -4,7 +4,7 @@ import Alerts from './Alerts';
 // import MakeHaiku from './MakeHaiku';
 import './Sass/App.scss';
 import { useState } from "react";
-
+import bg from './Assets/bg.mp4'
 
 function App() {
   // state to handle the word the user is searching
@@ -19,10 +19,11 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+  const [apperHaiku, setAppearHaiku] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
 
-
   const updateHaiku = () => {
+    setAppearHaiku(true)
     const usedSyllables = searchedWord[0]['numSyllables']
     // const usedWord = searchedWord[0]['word']
     // console.log('this is searchedWord', searchedWord[0]['numSyllables'])
@@ -66,48 +67,61 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Haikus Highway</h1>
 
+      <video autoPlay loop muted>
+          <source src={bg} type="video/mp4"/>
+      </video>
+
+      <div className="content wrapper">
+        <header>
+          <h1>Haikus Highway</h1>
+        </header>
+      
       {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
-      <UserForm 
-        searchedWord={searchedWord}
-        setSearchedWord={setSearchedWord}
-        userInput={userInput}
-        setUserInput={setUserInput}
-        handleAddToHaiku={handleAddToHaiku}
-      />
-
-      {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
-      <RecommendedWords
-        currentLine={currentLine}
-        line1={line1}
-        line2={line2}
-        line3={line3}
-        userInput={userInput}
-        setUserInput={setUserInput}
-      />
-
-      {showAlert === true
+      <main>
+        <UserForm 
+          searchedWord={searchedWord}
+          setSearchedWord={setSearchedWord}
+          userInput={userInput}
+          setUserInput={setUserInput}
+          handleAddToHaiku={handleAddToHaiku}
+        />
+        {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
+        <RecommendedWords
+          currentLine={currentLine}
+          line1={line1}
+          line2={line2}
+          line3={line3}
+          userInput={userInput}
+          setUserInput={setUserInput}
+        />
+       
+      {apperHaiku ?
+        
+       {showAlert === true
         ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
         : null}
-
-      <div className="haiku">
-        <div className="haikuHeading">
-          <h2>Here is your Haiku</h2>
-        </div>
-        <div className="haikuLine">
-          <p>{haikuLine1}</p>
-          <p>{line1}</p>
-        </div>
-        <div className="haikuLine">
-          <p>{haikuLine2}</p>
-          <p>{line2}</p>
-        </div>
-        <div className="haikuLine">
-          <p>{haikuLine3}</p>
-          <p>{line3}</p>
-        </div>
-      </div>
+        
+          <div className="haiku">
+            <div className="haikuHeading">
+              <h2>Here is your Haiku</h2>
+              <p># Syllable(s) left</p>
+            </div>
+            <div className="haikuLine">
+              <p>{haikuLine1}</p>
+              <p>{line1}</p>
+            </div>
+            <div className="haikuLine">
+              <p>{haikuLine2}</p>
+              <p>{line2}</p>
+            </div>
+            <div className="haikuLine">
+              <p>{haikuLine3}</p>
+              <p>{line3}</p>
+            </div>
+          </div> : null}
+        </main>
+      </div> 
     </div>
   );
 }

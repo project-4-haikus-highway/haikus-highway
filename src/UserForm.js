@@ -46,14 +46,16 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
   }
 
   return(
-    <div>
 
+    <div className="formContainer">
+      
       <form action="submit" onSubmit={handleSubmit}>
-        <label htmlFor=""></label>
-        <input type="text" value={userInput} onChange={handleChange} />
+        <label htmlFor="">Please enter a word to make haiku</label>
+        <input type="text" value={userInput} onChange={handleChange} placeholder="Hey.."/>
         <button type="submit">Search</button>
       </form>
       {
+
         isLoading ? <p>Loading...</p> :
         <ul className="searchedWord">
         {
