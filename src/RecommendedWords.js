@@ -9,6 +9,7 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
   // state for filtered frequently followed
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  
 
   useEffect( () => {
     axios({
@@ -16,8 +17,8 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
       method: 'GET',
       dataResponse: 'json',
       params: {
-        max: 10, //Keep an eye on this number of we don't get the word back on the page
-        rel_bga: userInput,
+        max: 100, //Keep an eye on this number of we don't get the word back on the page
+        // rel_bga: userInput,
         rel_trg: userInput,
         md: 's'
       }
@@ -34,12 +35,12 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
   const filterFreqFol = (secondApiData) => {
     const suggestedWords = [...secondApiData]
     console.log(line1, line2, line3);
-
     let filteredSuggestedWords = []
       if (currentLine === 1) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line1)
         }))
+        // Try For loop here. Also try that "if" statement filter
       } else if (currentLine === 2) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line2)
@@ -49,15 +50,17 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
           return (wordArray.numSyllables <= line3)
         }))
       }
-
-    setFilterFrequentFollow(filteredSuggestedWords);
-    console.log('this is this', filteredSuggestedWords);
-  }
+      
+      setFilterFrequentFollow(filteredSuggestedWords);
+      console.log('this is this', filteredSuggestedWords);
+      }
+      
+   
 
   return (
     <div className="suggestedWords">
       {
-        isLoading ? <p>Loading...</p> :
+        isLoading ? <p>Loading...</p> : 
         <ul>
           {
             filterFrequentFollow.map((wordSuggestion, index) => {
@@ -68,7 +71,7 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
               )
             })
           }
-        </ul>
+        </ul> 
       }
     </div>
   )
