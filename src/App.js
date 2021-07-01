@@ -7,6 +7,7 @@ import bg from './Assets/bg.mp4'
 import ConfirmWord from './ConfirmWord';
 import Lottie from "lottie-react";
 import animation from "./animation.json";
+import Footer from "./Footer";
 
 function App() {
   // state to handle the word the user is searching
