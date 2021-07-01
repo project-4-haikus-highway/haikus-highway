@@ -21,6 +21,8 @@ function App() {
   const [haikuLine3, setHaikuLine3] = useState('')
   const [appearHaiku, setAppearHaiku] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
+  const [doneMsg, setDoneMsg] = useState(false)
+
 
   const updateHaiku = () => {
     setAppearHaiku(true)
@@ -52,7 +54,7 @@ function App() {
     } else if ((line3 - usedSyllables) === 0 && currentLine === 3) {
         setLine3(line3 - usedSyllables)
         setHaikuLine3(haikuLine3 + ' ' + userInput)
-        alert('you are done!')
+        setDoneMsg(true)
     } else if ((line3 - usedSyllables) < 0 && currentLine === 3) {
         setShowAlert(true)
     }
@@ -98,9 +100,11 @@ function App() {
 
         {appearHaiku ?
           <>
-          {showAlert === true
-          ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
-          : null}
+          {
+            showAlert === true
+            ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
+            : null
+          }
           
             <div className="haiku">
               <div className="haikuHeading">
@@ -131,6 +135,11 @@ function App() {
                   <p>{line3}</p>
                 </div>
               </div>
+              {
+            doneMsg 
+            ? <div className="fadeInUp"><p>Congratulation your Haiku is done</p></div>
+            : null
+          }
             </div> 
             </>
             : null}
