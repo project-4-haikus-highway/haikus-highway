@@ -1,12 +1,12 @@
 import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
 import Alerts from './Alerts';
-// import MakeHaiku from './MakeHaiku';
 import './Sass/App.scss';
 import { useState } from "react";
 import bg from './Assets/bg.mp4'
-import Lottie from "lottie-react"; // importing Lottie library
-import animation from "./animation.json"; //importing animation file
+import ConfirmWord from './ConfirmWord';
+import Lottie from "lottie-react";
+import animation from "./animation.json";
 
 function App() {
   // state to handle the word the user is searching
@@ -24,13 +24,14 @@ function App() {
   const [appearHaiku, setAppearHaiku] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
   const [doneMsg, setDoneMsg] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
 
   const updateHaiku = () => {
     setAppearHaiku(true)
+    console.log('updated?', userInput);
     const usedSyllables = searchedWord[0]['numSyllables']
-    // const usedWord = searchedWord[0]['word']
-    // console.log('this is searchedWord', searchedWord[0]['numSyllables'])
+  
 
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
       setLine1(line1 - usedSyllables)
@@ -67,6 +68,9 @@ function App() {
     event.preventDefault();
     console.log('i have been clicked')
     updateHaiku();
+    if (document.getElementById("errorMessage").classList.contains("noDisplay")){
+      document.getElementById("errorMessage").classList.remove("noDisplay");
+    }
   }
 
   return (
@@ -84,11 +88,10 @@ function App() {
         {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
         <main>
           <UserForm 
-            searchedWord={searchedWord}
             setSearchedWord={setSearchedWord}
             userInput={userInput}
             setUserInput={setUserInput}
-            handleAddToHaiku={handleAddToHaiku}
+            setIsLoading={setIsLoading}
           />
           {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
           <RecommendedWords
@@ -98,6 +101,13 @@ function App() {
             line3={line3}
             userInput={userInput}
             setUserInput={setUserInput}
+            setSearchedWord={setSearchedWord}
+          />
+
+          <ConfirmWord
+            searchedWord={searchedWord}
+            handleAddToHaiku={handleAddToHaiku}
+            isLoading={isLoading}
           />
 
         {appearHaiku ?

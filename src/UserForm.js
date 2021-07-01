@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import axios from "axios";
 
 
-function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, handleAddToHaiku} ) {
+function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
     // state to store axios return for searched word and other similar words
   // const [soundsLike, setSoundsLike] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false)
 
   const apiCall = (userInput) => {
     axios({
@@ -23,6 +21,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
       console.log(res.data);
       userInputFilter(res.data);
       setIsLoading(false);
+      
     })
   }
 
@@ -51,25 +50,9 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
       
       <form action="submit" onSubmit={handleSubmit}>
         <label htmlFor="">Please enter a word to make haiku</label>
-        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" placeholder="Hey.."/>
+        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" title="Only alphabetical letters." placeholder="Hey.."/>
         <button type="submit">Search</button>
       </form>
-      {
-
-        isLoading ? <p>Loading...</p> :
-        <ul className="searchedWord">
-        {
-          searchedWord.map((returnedWord, index) => {
-            return (
-              <li key={index}>
-                <p>Click on the word to add to your haiku</p>
-                <button onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</button>
-              </li>
-            )
-          })
-        }
-        </ul>
-      }
     </div>
   )
 
