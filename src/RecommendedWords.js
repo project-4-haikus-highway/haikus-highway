@@ -25,6 +25,7 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [line1, line2, line3])
 
+  // filtering the API data to determine where it is going and that only the correct numSyllables are sent on
   const filterFreqFol = (secondApiData) => {
     const suggestedWords = [...secondApiData]
     let filteredSuggestedWords = []
@@ -34,51 +35,39 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
       filteredSuggestedWords = suggestedWords.filter((wordArray => {
         return (wordArray.numSyllables <= line1)
       }))
-      if (filteredSuggestedWords.length >= 10){
-        setErrorMessage(false)
-        for(let i = 0; i < 10; i++){
-          tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
-        }
-        setFilterFrequentFollow(tenFilteredSuggestedWords)
-      } else if (filteredSuggestedWords.length >= 1){
-        setFilterFrequentFollow(filteredSuggestedWords)
-      } else {setErrorMessage(true)}
-
+      filterSuggest(filteredSuggestedWords, tenFilteredSuggestedWords)
 
     } else if (currentLine === 2) {
       filteredSuggestedWords = suggestedWords.filter((wordArray => {
         return (wordArray.numSyllables <= line2)
       }))
-      if (filteredSuggestedWords.length >= 10){
-        setErrorMessage(false)
-        for(let i = 0; i < 10; i++){
-          tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
-        }
-        setFilterFrequentFollow(tenFilteredSuggestedWords)
-      } else if (filteredSuggestedWords.length >= 1){
-        setFilterFrequentFollow(filteredSuggestedWords)
-      } else {setErrorMessage(true)}
-
+      filterSuggest(filteredSuggestedWords, tenFilteredSuggestedWords)
 
     } else if (currentLine === 3) {
       filteredSuggestedWords = suggestedWords.filter((wordArray => {
         return (wordArray.numSyllables <= line3)
       }))
-      if (filteredSuggestedWords.length >= 10){
-        setErrorMessage(false)
-        for(let i = 0; i < 10; i++){
-          tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
-        }
-        setFilterFrequentFollow(tenFilteredSuggestedWords)
-      } else if (filteredSuggestedWords.length >= 1){
-        setFilterFrequentFollow(filteredSuggestedWords)
-      } else if (line3 === 0){
-        setFilterFrequentFollow([])
-        setErrorMessage(true)
-      }else {setErrorMessage(true)}
+      filterSuggest(filteredSuggestedWords, tenFilteredSuggestedWords)
     }
   }
 
+  // create array of suggested words from API to max of 10 words
+  function filterSuggest(filteredSuggestedWords, tenFilteredSuggestedWords) {
+    if (filteredSuggestedWords.length >= 10) {
+      setErrorMessage(false)
+      for (let i = 0; i < 10; i++) {
+        tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+      }
+      setFilterFrequentFollow(tenFilteredSuggestedWords)
+    } else if (filteredSuggestedWords.length >= 1) {
+      setFilterFrequentFollow(filteredSuggestedWords)
+    } else if (line3 === 0) {
+      setFilterFrequentFollow([])
+      setErrorMessage(true)
+    } else { setErrorMessage(true) }
+  }
+
+  // onClick that allows suggested word to be added 
   function addRecommendedWord (newWord) {
     setUserInput(newWord.word);
     setSearchedWord([newWord]);

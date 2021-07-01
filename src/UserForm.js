@@ -44,7 +44,7 @@ function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
       
       <form action="submit" onSubmit={handleSubmit}>
         <label htmlFor="">Please enter a word to make your haiku</label>
-        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" title="Only alphabetical letters." placeholder="Hey.."/>
+        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" title="Only alphabetical letters." placeholder="type your own word"/>
         <button type="submit">Search</button>
       </form>
     </div>
