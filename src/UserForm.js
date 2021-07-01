@@ -1,10 +1,6 @@
 import axios from "axios";
 
-
 function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
-    // state to store axios return for searched word and other similar words
-  // const [soundsLike, setSoundsLike] = useState([]);
-
 
   const apiCall = (userInput) => {
     axios({
@@ -12,13 +8,11 @@ function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
       method: 'GET',
       dataResponse: 'json',
       params: {
-        max: 100, //Keep an eye on this number of we don't get the word back on the page
+        max: 100, 
         sl: userInput,
         md: 's'
       }
     }).then((res) => {
-      // setSoundsLike(res.data);
-      console.log(res.data);
       userInputFilter(res.data);
       setIsLoading(false);
       
@@ -30,7 +24,7 @@ function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
     const filteredApiData = copyOfApiData.filter((wordArray => {
       return (wordArray.word === userInput)
     }))
-    setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
+    setSearchedWord(filteredApiData)
   }
 
   const handleChange = (event) => {

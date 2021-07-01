@@ -3,29 +3,22 @@ import { useEffect, useState } from "react";
 
 function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUserInput, setSearchedWord, loadDisplay } ) {
 
-  //  // for second APi call
-  // const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
-
-  // state for filtered frequently followed
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState(false)
   
-
   useEffect( () => {
     axios({
       url: 'https://api.datamuse.com/words?',
       method: 'GET',
       dataResponse: 'json',
       params: {
-        max: 100, //Keep an eye on this number of we don't get the word back on the page
+        max: 100,
         rel_trg: userInput,
         md: 's'
       }
     }).then((response) => {
-      // setFrequentlyFollowed(response.data)
       filterFreqFol(response.data)
-      console.log('I am new thingy', response.data);
       setUserInput('');
       setIsLoading(false);
     })
@@ -34,65 +27,62 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
 
   const filterFreqFol = (secondApiData) => {
     const suggestedWords = [...secondApiData]
-    console.log(line1, line2, line3);
     let filteredSuggestedWords = []
     let tenFilteredSuggestedWords = []
-    
-      if (currentLine === 1) {
-        filteredSuggestedWords = suggestedWords.filter((wordArray => {
-          return (wordArray.numSyllables <= line1)
-        }))
-        if (filteredSuggestedWords.length >= 10){
-          setErrorMessage(false)
-          for(let i = 0; i < 10; i++){
-            tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
-          }
-          setFilterFrequentFollow(tenFilteredSuggestedWords)
-        } else if (filteredSuggestedWords.length >= 1){
-          setFilterFrequentFollow(filteredSuggestedWords)
-        } else {setErrorMessage(true)}
+
+    if (currentLine === 1) {
+      filteredSuggestedWords = suggestedWords.filter((wordArray => {
+        return (wordArray.numSyllables <= line1)
+      }))
+      if (filteredSuggestedWords.length >= 10){
+        setErrorMessage(false)
+        for(let i = 0; i < 10; i++){
+          tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+        }
+        setFilterFrequentFollow(tenFilteredSuggestedWords)
+      } else if (filteredSuggestedWords.length >= 1){
+        setFilterFrequentFollow(filteredSuggestedWords)
+      } else {setErrorMessage(true)}
 
 
-      } else if (currentLine === 2) {
-        filteredSuggestedWords = suggestedWords.filter((wordArray => {
-          return (wordArray.numSyllables <= line2)
-        }))
-        if (filteredSuggestedWords.length >= 10){
-          setErrorMessage(false)
-          for(let i = 0; i < 10; i++){
-            tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
-          }
-          setFilterFrequentFollow(tenFilteredSuggestedWords)
-        } else if (filteredSuggestedWords.length >= 1){
-          setFilterFrequentFollow(filteredSuggestedWords)
-        } else {setErrorMessage(true)}
+    } else if (currentLine === 2) {
+      filteredSuggestedWords = suggestedWords.filter((wordArray => {
+        return (wordArray.numSyllables <= line2)
+      }))
+      if (filteredSuggestedWords.length >= 10){
+        setErrorMessage(false)
+        for(let i = 0; i < 10; i++){
+          tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+        }
+        setFilterFrequentFollow(tenFilteredSuggestedWords)
+      } else if (filteredSuggestedWords.length >= 1){
+        setFilterFrequentFollow(filteredSuggestedWords)
+      } else {setErrorMessage(true)}
 
 
-      } else if (currentLine === 3) {
-        filteredSuggestedWords = suggestedWords.filter((wordArray => {
-          return (wordArray.numSyllables <= line3)
-        }))
-        if (filteredSuggestedWords.length >= 10){
-          setErrorMessage(false)
-          for(let i = 0; i < 10; i++){
-            tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
-          }
-          setFilterFrequentFollow(tenFilteredSuggestedWords)
-        } else if (filteredSuggestedWords.length >= 1){
-          setFilterFrequentFollow(filteredSuggestedWords)
-        } else {setErrorMessage(true)}
-      }
+    } else if (currentLine === 3) {
+      filteredSuggestedWords = suggestedWords.filter((wordArray => {
+        return (wordArray.numSyllables <= line3)
+      }))
+      if (filteredSuggestedWords.length >= 10){
+        setErrorMessage(false)
+        for(let i = 0; i < 10; i++){
+          tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+        }
+        setFilterFrequentFollow(tenFilteredSuggestedWords)
+      } else if (filteredSuggestedWords.length >= 1){
+        setFilterFrequentFollow(filteredSuggestedWords)
+      } else if (line3 === 0){
+        setFilterFrequentFollow([])
+        setErrorMessage(true)
+      }else {setErrorMessage(true)}
+    }
+  }
 
-
-      console.log(tenFilteredSuggestedWords)
-      console.log('filteredSuggestedWords', filteredSuggestedWords);
-      }
-
-function addRecommendedWord (newWord) {
-  console.log(newWord);
-  setUserInput(newWord.word);
-  setSearchedWord([newWord]);
-}
+  function addRecommendedWord (newWord) {
+    setUserInput(newWord.word);
+    setSearchedWord([newWord]);
+  }
 
   return (
     <div className="suggestedWords">
@@ -114,7 +104,7 @@ function addRecommendedWord (newWord) {
                 return (
                   <li className="returnedWords" key={index}>
                     <button onClick={() => { addRecommendedWord(wordSuggestion) }}>
-                    {wordSuggestion.word}
+                      {wordSuggestion.word}
                     </button>
                   </li>
                 )

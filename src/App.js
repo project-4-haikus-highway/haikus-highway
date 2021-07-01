@@ -30,10 +30,8 @@ function App() {
 
   const updateHaiku = () => {
     setAppearHaiku(true)
-    console.log('updated?', userInput);
     const usedSyllables = searchedWord[0]['numSyllables']
   
-
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
       setLine1(line1 - usedSyllables)
       setHaikuLine1(haikuLine1 + ' ' + userInput)
@@ -67,7 +65,6 @@ function App() {
 
   const handleAddToHaiku = (event) => {
     event.preventDefault();
-    console.log('i have been clicked')
     updateHaiku();
     setLoadDisplay(false)
   }
@@ -84,40 +81,39 @@ function App() {
             <h1>Haikus Highway</h1>
           </header>
         
-        {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
-        <main>
-          <UserForm 
-            setSearchedWord={setSearchedWord}
-            userInput={userInput}
-            setUserInput={setUserInput}
-            setIsLoading={setIsLoading}
-          />
-          {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
-          <RecommendedWords
-            currentLine={currentLine}
-            line1={line1}
-            line2={line2}
-            line3={line3}
-            userInput={userInput}
-            setUserInput={setUserInput}
-            setSearchedWord={setSearchedWord}
-            loadDisplay={loadDisplay}
-          />
+          <main>
+            <UserForm 
+              setSearchedWord={setSearchedWord}
+              userInput={userInput}
+              setUserInput={setUserInput}
+              setIsLoading={setIsLoading}
+            />
 
-          <ConfirmWord
-            searchedWord={searchedWord}
-            handleAddToHaiku={handleAddToHaiku}
-            isLoading={isLoading}
-          />
+            <RecommendedWords
+              currentLine={currentLine}
+              line1={line1}
+              line2={line2}
+              line3={line3}
+              userInput={userInput}
+              setUserInput={setUserInput}
+              setSearchedWord={setSearchedWord}
+              loadDisplay={loadDisplay}
+            />
 
-        {appearHaiku ?
-          <>
-          {
-            showAlert === true
-            ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
-            : null
-          }
-          
+            <ConfirmWord
+              searchedWord={searchedWord}
+              handleAddToHaiku={handleAddToHaiku}
+              isLoading={isLoading}
+            />
+
+          {appearHaiku ?
+            <>
+            {
+              showAlert === true
+              ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
+              : null
+            }
+            
             <div className="haiku">
               <div className="haikuHeading">
                 <h2>Here is your Haiku</h2>
@@ -148,17 +144,17 @@ function App() {
                 </div>
               </div>
               {
-            doneMsg 
-            ? <section><div className="fadeInUp"><p>Congratulations! Your Haiku is done!</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
-            : null
-          }
+                doneMsg 
+                ? <section><div className="fadeInUp"><p>Congratulations! Your Haiku is done!</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
+                : null
+              }
             </div> 
             </>
             : null}
           </main>
-        </div> 
-      </div>
-    </div>
+        </div> {/* content div */}
+      </div> {/* wrapper div */}
+    </div> //App div
   );
 }
 
