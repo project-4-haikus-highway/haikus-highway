@@ -3,7 +3,8 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 function Alerts({ setShowAlert, setUserInput} ) {
     const element = <FontAwesomeIcon icon={faTimes} />
-
+    
+    //function to alert user when there's no more syllables left to add the chosen word
     const handleAlertClick = (event) => {
         event.preventDefault();
         setShowAlert(false);

@@ -1,0 +1,52 @@
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  label {
+    @include fontStyles(1.3rem, normal, $primary, $base-font);
+    width: 100%;
+    font-weight: bold;
+    margin: 15px 0;
+  }
+  input {
+    padding: 8px 12px;
+    background-color: whitesmoke;
+    border: 4px solid transparent;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: all 0.3s;
+    color: $tertiary;
+  }
+  input:hover,
+  input:focus {
+    border: 4px solid $secondary;
+  }
+  button {
+    padding: 8px 12px;
+    margin: 10px 5px;
+    text-transform: uppercase;
+    background-color: $secondary;
+    border: 4px solid $secondary;
+    border-radius: 5px;
+    color: $tertiary;
+    transition: all 0.2s;
+  }
+
+  button:hover,
+  button:focus {
+    background-color: $tertiary;
+    color: $secondary;
+  }
+
+}
+
+.addToHaiku {
+  padding: 0;
+  cursor: pointer;
+  color: $secondary;
+  background-color: transparent;
+  border: none;
+  text-transform: capitalize;
+  @include fontStyles(1.5rem, italic, $secondary, $base-font);
+}

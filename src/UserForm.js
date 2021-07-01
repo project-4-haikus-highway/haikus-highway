@@ -1,43 +1,43 @@
 import axios from "axios";
 
-
+//passing props to APPjs file
 function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
-    // state to store axios return for searched word and other similar words
-  // const [soundsLike, setSoundsLike] = useState([]);
 
-
+  //Making API call for the word searched by user
   const apiCall = (userInput) => {
     axios({
       url: 'https://api.datamuse.com/words?',
       method: 'GET',
       dataResponse: 'json',
       params: {
-        max: 100, //Keep an eye on this number of we don't get the word back on the page
+        max: 100, 
         sl: userInput,
         md: 's'
       }
     }).then((res) => {
-      // setSoundsLike(res.data);
-      console.log(res.data);
       userInputFilter(res.data);
       setIsLoading(false);
       
     })
   }
 
+  //function to filter words returned 
+
   const userInputFilter = (apiData) => {
     const copyOfApiData = [...apiData]
     const filteredApiData = copyOfApiData.filter((wordArray => {
       return (wordArray.word === userInput)
     }))
-    setSearchedWord(filteredApiData) //watch for errors and go through it again for more clarity  
+    setSearchedWord(filteredApiData)
   }
 
+  //Function to grab the word entered by user
   const handleChange = (event) => {
     const input = event.target.value.toLowerCase()
     setUserInput(input)
   }
 
+  //Function to make an API call when user submits the search word
   const handleSubmit = (event) => {
     event.preventDefault();
     apiCall(userInput)
@@ -49,8 +49,8 @@ function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
     <div className="formContainer">
       
       <form action="submit" onSubmit={handleSubmit}>
-        <label htmlFor="">Please enter a word to make haiku</label>
-        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" title="Only alphabetical letters." placeholder="Hey.."/>
+        <label htmlFor="">Please enter a word to make your haiku</label>
+        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" title="Only alphabetical letters." placeholder="type your own word"/>
         <button type="submit">Search</button>
       </form>
     </div>

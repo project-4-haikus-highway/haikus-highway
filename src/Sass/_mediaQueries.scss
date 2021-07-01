@@ -1,0 +1,58 @@
+@media (max-width: 720px){
+  .wrapper {
+    @include wrapper(95%);
+  }
+
+  span {
+    display: block;
+  }
+
+  .content {
+    padding: 1px 1px 43px 1px;
+  }
+
+  .recWordTitle {
+    line-height: 1.5rem;
+  }
+
+  .haiku p {
+    font-size: 0.9rem;
+  }
+
+  .haikuContainer .haikuAllLines {
+    margin-left: 5%;
+    padding-top: 15px;
+    p {
+      font-size: 1.2rem;
+    }
+  }
+
+  footer {
+    height: 43px;
+    p,
+    a {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+@media (max-width: 425px){
+  form {
+    input,
+    button {
+      width: 80%;
+      margin: 5px 0;
+    }
+  }
+
+    .haikuContainer .haikuAllLines {
+      margin-left: 2px;
+      padding-top: 20px;
+      p {
+        font-size: 1.0rem;
+      }
+    }
+    .haiku p {
+      font-size: 0.8rem;
+    }
+}

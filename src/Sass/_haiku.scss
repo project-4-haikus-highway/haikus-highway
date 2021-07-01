@@ -1,0 +1,89 @@
+
+.haiku {
+  .haikuHeading {
+    h2{
+      margin: 25px auto;
+    }
+  }
+  p {
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+.haikuContainer{
+  display:flex;
+  position:relative;
+  .haikuSyllables{
+    width:25%;
+  }
+  .syllablesTitle{
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  }
+  .haikuAllLines{
+    flex-grow:4;
+    margin-left:25%;
+    p {
+      text-transform: capitalize;
+      @include fontStyles(1.8rem, normal, $secondary, $base-font);
+      text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    }
+  }
+  &:before{
+    content:"";
+    width:500px;
+    height:3px;
+    background-color:$secondary;
+    position:absolute;
+    border-radius:3px;
+    top: -5px;
+    left:calc(50% - 250px);
+  }
+  &:after{
+    content:"";
+    width:400px;
+    height:3px;
+    background-color:$secondary;
+    position:absolute;
+    border-radius:3px;
+    bottom: -10px;
+    left:calc(50% - 200px);
+  }
+}
+
+
+.fadeInUp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px transparent solid;
+  border-radius: 5px;
+  animation-name: fadeInUp;
+  animation-duration: 4s;
+  animation-fill-mode: both;
+  width: 50%;
+  margin:0 auto;
+  margin-top: 2%;
+  p {
+    @include fontStyles(1.6rem, normal, $primary, $base-font);
+    color: $secondary;
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animation {
+  display: flex;
+  justify-content: center;
+}

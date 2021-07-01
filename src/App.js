@@ -7,32 +7,46 @@ import bg from './Assets/bg.mp4'
 import ConfirmWord from './ConfirmWord';
 import Lottie from "lottie-react";
 import animation from "./animation.json";
+import Footer from "./Footer";
 
 function App() {
-  // state to handle the word the user is searching
+  // to handle the word the user is searching
   const [userInput, setUserInput] = useState('')
 
   // contains the filtered data from API call (object with userInput word info)
-  const [searchedWord, setSearchedWord] = useState([])
+  const [searchedWord, setSearchedWord] = useState([])  
+
+  // keep count of remaining syllables
   const [line1, setLine1] = useState(5)
   const [line2, setLine2] = useState(7)
   const [line3, setLine3] = useState(5)
+
+  //  to keep track of current line
   const [currentLine, setCurrentLine] = useState(1)
+
+  // to store haiku lines as they build
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+
+  // to mount haiku
   const [appearHaiku, setAppearHaiku] = useState(false)
+
+  // to mount alert
   const [showAlert, setShowAlert] = useState(false)
+
+  // to mount done notice
   const [doneMsg, setDoneMsg] = useState(false)
+
+  // loading states
   const [isLoading, setIsLoading] = useState(false)
+  const [loadDisplay, setLoadDisplay] = useState(true)
 
-
+  // build haiku strings after user adds a word
   const updateHaiku = () => {
     setAppearHaiku(true)
-    console.log('updated?', userInput);
     const usedSyllables = searchedWord[0]['numSyllables']
   
-
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
       setLine1(line1 - usedSyllables)
       setHaikuLine1(haikuLine1 + ' ' + userInput)
@@ -64,13 +78,11 @@ function App() {
     setSearchedWord([]);
   }
 
+  // updates haiku and loading state
   const handleAddToHaiku = (event) => {
     event.preventDefault();
-    console.log('i have been clicked')
     updateHaiku();
-    if (document.getElementById("errorMessage").classList.contains("noDisplay")){
-      document.getElementById("errorMessage").classList.remove("noDisplay");
-    }
+    setLoadDisplay(false)
   }
 
   return (
@@ -85,80 +97,78 @@ function App() {
             <h1>Haikus Highway</h1>
           </header>
         
-        {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
-        <main>
-          <UserForm 
-            setSearchedWord={setSearchedWord}
-            userInput={userInput}
-            setUserInput={setUserInput}
-            setIsLoading={setIsLoading}
-          />
-          {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
-          <RecommendedWords
-            currentLine={currentLine}
-            line1={line1}
-            line2={line2}
-            line3={line3}
-            userInput={userInput}
-            setUserInput={setUserInput}
-            setSearchedWord={setSearchedWord}
-          />
+          <main>
+            <UserForm 
+              setSearchedWord={setSearchedWord}
+              userInput={userInput}
+              setUserInput={setUserInput}
+              setIsLoading={setIsLoading}
+            />
 
-          <ConfirmWord
-            searchedWord={searchedWord}
-            handleAddToHaiku={handleAddToHaiku}
-            isLoading={isLoading}
-          />
+            <RecommendedWords
+              currentLine={currentLine}
+              line1={line1}
+              line2={line2}
+              line3={line3}
+              userInput={userInput}
+              setUserInput={setUserInput}
+              setSearchedWord={setSearchedWord}
+              loadDisplay={loadDisplay}
+            />
 
-        {appearHaiku ?
-          <>
-          {
-            showAlert === true
-            ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
-            : null
-          }
-          
+            <ConfirmWord
+              searchedWord={searchedWord}
+              handleAddToHaiku={handleAddToHaiku}
+              isLoading={isLoading}
+            />
+
+          {appearHaiku ?
+            <>
+            {
+              showAlert === true
+              ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
+              : null
+            }
+            
             <div className="haiku">
               <div className="haikuHeading">
                 <h2>Here is your Haiku</h2>
-                <p># Syllable(s) left</p>
               </div>
-              <div className="haikuLine">
-                <div className="line">
-                  <p>{haikuLine1}</p>
+            
+              <div className="haikuContainer">
+                <div className="haikuAllLines">
+                      <p>{haikuLine1}</p>
+                      <p>{haikuLine2}</p>
+                      <p>{haikuLine3}</p>
                 </div>
-                <div className="numbers">
-                  <p>{line1}</p>
-                </div>
-              </div>
-              <div className="haikuLine">
-                <div className="line">
-                  <p>{haikuLine2}</p>
-                </div>
-                <div className="numbers">
-                  <p>{line2}</p>
+                <div className="haikuSyllables">
+                <p className="syllablesTitle"># Syllable(s) left</p>
+                  <p>1st Line: {line1}</p>
+                  <p>2nd Line: {line2}</p>
+                  <p>3rd Line: {line3}</p>
                 </div>
               </div>
-              <div className="haikuLine">
-                <div className="line">
-                  <p>{haikuLine3}</p>
-                </div>
-                <div className="numbers">
-                  <p>{line3}</p>
-                </div>
-              </div>
+
               {
-            doneMsg 
-            ? <section><div className="fadeInUp"><p>Congratulation your Haiku is done</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
-            : null
-          }
+                doneMsg ? 
+                  <section>
+                    <div className="fadeInUp">
+                      <p>Congratulations! Your Haiku is done!</p>
+                    </div>
+                    <div className="animation">
+                      <Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/>
+                    </div>
+                  </section>
+                : null
+              }
             </div> 
             </>
             : null}
           </main>
-        </div> 
-      </div>
-    </div>
+        </div> {/* content div */}
+      </div> {/* wrapper div */}
+      <Footer />
+    </div> //App div
   );
 }
 
