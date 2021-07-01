@@ -9,6 +9,8 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
   // state for filtered frequently followed
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(false)
+  
 
   useEffect( () => {
     axios({
@@ -16,8 +18,7 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
       method: 'GET',
       dataResponse: 'json',
       params: {
-        max: 10, //Keep an eye on this number of we don't get the word back on the page
-        rel_bga: userInput,
+        max: 100, //Keep an eye on this number of we don't get the word back on the page
         rel_trg: userInput,
         md: 's'
       }
@@ -34,25 +35,43 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
   const filterFreqFol = (secondApiData) => {
     const suggestedWords = [...secondApiData]
     console.log(line1, line2, line3);
-
     let filteredSuggestedWords = []
+    let tenFilteredSuggestedWords = []
       if (currentLine === 1) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line1)
         }))
+        if (filteredSuggestedWords.length >= 1){
+          setErrorMessage(false)
+          for(let i = 0; i < 10; i++){
+            tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+          }
+        } else {setErrorMessage(true)}
       } else if (currentLine === 2) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line2)
         }))
+        if (filteredSuggestedWords.length >= 1){
+          setErrorMessage(false)
+          for(let i = 0; i < 10; i++){
+            tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+          }
+        } else {setErrorMessage(true)}
       } else if (currentLine === 3) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line3)
         }))
+        if (filteredSuggestedWords.length >= 1){
+          setErrorMessage(false)
+          for(let i = 0; i < 10; i++){
+            tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
+          }
+        } else {setErrorMessage(true)}
       }
-
-    setFilterFrequentFollow(filteredSuggestedWords);
-    console.log('this is this', filteredSuggestedWords);
-  }
+      console.log(tenFilteredSuggestedWords)
+      setFilterFrequentFollow(tenFilteredSuggestedWords);
+      console.log('filteredSuggestedWords', filteredSuggestedWords);
+      }
 
 function addRecommendedWord (newWord) {
   console.log(newWord);
@@ -82,7 +101,9 @@ function addRecommendedWord (newWord) {
             }
           </ul>
         </>
+
       }
+      {errorMessage ? <p id="errorMessage" className="otherClass, noDisplay">Couldn't Find Any Words, Sorry!</p> : <div id="errorMessage"></div>}
     </div>
   )
 } 
