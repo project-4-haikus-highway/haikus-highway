@@ -10,25 +10,39 @@ import animation from "./animation.json";
 import Footer from "./Footer";
 
 function App() {
-  // state to handle the word the user is searching
+  // to handle the word the user is searching
   const [userInput, setUserInput] = useState('')
 
   // contains the filtered data from API call (object with userInput word info)
-  const [searchedWord, setSearchedWord] = useState([])
+  const [searchedWord, setSearchedWord] = useState([])  
+
+  // keep count of remaining syllables
   const [line1, setLine1] = useState(5)
   const [line2, setLine2] = useState(7)
   const [line3, setLine3] = useState(5)
+
+  //  to keep track of current line
   const [currentLine, setCurrentLine] = useState(1)
+
+  // to store haiku lines as they build
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
+
+  // to mount haiku
   const [appearHaiku, setAppearHaiku] = useState(false)
+
+  // to mount alert
   const [showAlert, setShowAlert] = useState(false)
+
+  // to mount done notice
   const [doneMsg, setDoneMsg] = useState(false)
+
+  // loading states
   const [isLoading, setIsLoading] = useState(false)
   const [loadDisplay, setLoadDisplay] = useState(true)
 
-
+  // build haiku strings after user adds a word
   const updateHaiku = () => {
     setAppearHaiku(true)
     const usedSyllables = searchedWord[0]['numSyllables']
@@ -64,6 +78,7 @@ function App() {
     setSearchedWord([]);
   }
 
+  // updates haiku and loading state
   const handleAddToHaiku = (event) => {
     event.preventDefault();
     updateHaiku();
