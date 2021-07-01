@@ -24,9 +24,9 @@ function App() {
 
   const updateHaiku = () => {
     setAppearHaiku(true)
+    console.log('updated?', userInput);
     const usedSyllables = searchedWord[0]['numSyllables']
-    // const usedWord = searchedWord[0]['word']
-    // console.log('this is searchedWord', searchedWord[0]['numSyllables'])
+  
 
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
       setLine1(line1 - usedSyllables)
@@ -94,6 +94,7 @@ function App() {
             line3={line3}
             userInput={userInput}
             setUserInput={setUserInput}
+              setSearchedWord={setSearchedWord}
           />
 
         {appearHaiku ?

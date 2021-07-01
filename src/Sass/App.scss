@@ -133,6 +133,8 @@ form {
   @include fontStyles (1.5rem, italic, $secondary, $base-font);
 }
 
+
+
 // *******************************
 //         suggestedWord styling
 // *******************************
@@ -146,6 +148,11 @@ form {
     flex-wrap: wrap;
     .returnedWords {
       padding: 10px 20px;
+      button {
+        border:none;
+        background-color: transparent;
+        @include fontStyles (1.2rem, normal, $primary, $base-font);
+      }
     }
   }
 }
