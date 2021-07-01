@@ -118,51 +118,32 @@ function App() {
             <div className="haiku">
               <div className="haikuHeading">
                 <h2>Here is your Haiku</h2>
-                
               </div>
             
-              {/* <div className="haikuLine">
-                <div className="line">
-                  
-                </div>
-                <div className="numbers">
-                  
-                </div>
-              </div> */}
               <div className="haikuContainer">
                 <div className="haikuAllLines">
                       <p>{haikuLine1}</p>
                       <p>{haikuLine2}</p>
                       <p>{haikuLine3}</p>
                 </div>
-
                 <div className="haikuSyllables">
-                  <p># Syllable(s) left</p>
-                  <p>{line1}</p>
-                  <p>{line2}</p>
-                  <p>{line3}</p>
+                <p className="syllablesTitle"># Syllable(s) left</p>
+                  <p>1st Line: {line1}</p>
+                  <p>2nd Line: {line2}</p>
+                  <p>3rd Line: {line3}</p>
                 </div>
               </div>
-              
-              {/* <div className="haikuLine">
-                <div className="line">
-                  
-                </div>
-                <div className="numbers">
-                  
-                </div>
-              </div>
-              <div className="haikuLine">
-                <div className="line">
-                  
-                </div>
-                <div className="numbers">
-                  
-                </div>
-              </div> */}
+
               {
-                doneMsg 
-                ? <section><div className="fadeInUp"><p>Congratulations! Your Haiku is done!</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
+                doneMsg ? 
+                  <section>
+                    <div className="fadeInUp">
+                      <p>Congratulations! Your Haiku is done!</p>
+                    </div>
+                    <div className="animation">
+                      <Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/>
+                    </div>
+                  </section>
                 : null
               }
             </div> 

@@ -1,13 +1,9 @@
 
 .haiku {
   .haikuHeading {
-    p {
-      margin-left: 68%;
+    h2{
+      margin: 25px auto;
     }
-  }
-  .haikuLine {
-    justify-content: space-between;
-    display: flex;
   }
   p {
     margin: 10px 0;
@@ -15,22 +11,47 @@
     text-align: center;
   }
 }
-
-.numbers {
-  width: 30%;
-}
-
-.line {
-  width: 65%;
-  p {
-    text-transform: capitalize;
-    @include fontStyles(1.8rem, normal, $secondary, $base-font);
-    text-shadow: 1px 0 0 #000,
-    0 -1px 0 #000,
-    0 1px 0 #000,
-    -1px 0 0 #000;
+.haikuContainer{
+  display:flex;
+  position:relative;
+  .haikuSyllables{
+    width:25%;
+  }
+  .syllablesTitle{
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  }
+  .haikuAllLines{
+    flex-grow:4;
+    margin-left:25%;
+    p {
+      text-transform: capitalize;
+      @include fontStyles(1.8rem, normal, $secondary, $base-font);
+      text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+    }
+  }
+  &:before{
+    content:"";
+    width:500px;
+    height:3px;
+    background-color:$secondary;
+    position:absolute;
+    border-radius:3px;
+    top: -5px;
+    left:calc(50% - 250px);
+  }
+  &:after{
+    content:"";
+    width:400px;
+    height:3px;
+    background-color:$secondary;
+    position:absolute;
+    border-radius:3px;
+    bottom: -10px;
+    left:calc(50% - 200px);
   }
 }
+
+
 .fadeInUp {
   display: flex;
   align-items: center;
@@ -41,7 +62,7 @@
   animation-duration: 4s;
   animation-fill-mode: both;
   width: 50%;
-  margin-left: 27%;
+  margin:0 auto;
   margin-top: 2%;
   p {
     @include fontStyles(1.6rem, normal, $primary, $base-font);
