@@ -1,7 +1,9 @@
 import axios from "axios";
 
+//passing props to APPjs file
 function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
 
+  //Making API call for the word searched by user
   const apiCall = (userInput) => {
     axios({
       url: 'https://api.datamuse.com/words?',
@@ -19,6 +21,8 @@ function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
     })
   }
 
+  //function to filter words returned 
+
   const userInputFilter = (apiData) => {
     const copyOfApiData = [...apiData]
     const filteredApiData = copyOfApiData.filter((wordArray => {
@@ -27,11 +31,13 @@ function UserForm({ setSearchedWord, userInput, setUserInput, setIsLoading } ) {
     setSearchedWord(filteredApiData)
   }
 
+  //Function to grab the word entered by user
   const handleChange = (event) => {
     const input = event.target.value.toLowerCase()
     setUserInput(input)
   }
 
+  //Function to make an API call when user submits the search word
   const handleSubmit = (event) => {
     event.preventDefault();
     apiCall(userInput)
