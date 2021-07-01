@@ -18,7 +18,7 @@
   height: 100%;
 }
 .content {
-  // margin-top: 50%;
+  margin-top: 50px;
   padding: 20px 0;
   background-color: #30302fd3;
   // background-image: linear-gradient(315deg, #bcbca6 0%, #bcbca6b8 74%, );
@@ -41,6 +41,7 @@ video {
 body {
   font-size: 125%;
   font-family: $base-font;
+  background-color: #bcbca6d0;
 }
 
 li {
@@ -142,6 +143,7 @@ form {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     .returnedWords {
       padding: 10px 20px;
     }
@@ -154,17 +156,27 @@ form {
 
 .haiku {
   .haikuHeading {
+
     p {
-      margin-left: 50%;
+      margin-left: 68%;
     }
   }
   .haikuLine {
-    justify-content: space-around;
+    justify-content: space-between;
     display: flex;
   }
   p {
     margin: 10px 0;
     font-weight: bold;
+    text-align: center;
   }
   
+}
+
+.numbers {
+  width: 30%;
+}
+
+.line {
+  width: 65%;
 }

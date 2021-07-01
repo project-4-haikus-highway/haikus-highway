@@ -71,59 +71,72 @@ function App() {
       <video autoPlay loop muted>
           <source src={bg} type="video/mp4"/>
       </video>
-
-      <div className="content wrapper">
-        <header>
-          <h1>Haikus Highway</h1>
-        </header>
-      
-      {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
-      <main>
-        <UserForm 
-          searchedWord={searchedWord}
-          setSearchedWord={setSearchedWord}
-          userInput={userInput}
-          setUserInput={setUserInput}
-          handleAddToHaiku={handleAddToHaiku}
-        />
-        {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
-        <RecommendedWords
-          currentLine={currentLine}
-          line1={line1}
-          line2={line2}
-          line3={line3}
-          userInput={userInput}
-          setUserInput={setUserInput}
-        />
-
-      {appearHaiku ?
-        <>
-        {showAlert === true
-        ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
-        : null}
+      <div className="wrapper">
+        <div className="content">
+          <header>
+            <h1>Haikus Highway</h1>
+          </header>
         
-          <div className="haiku">
-            <div className="haikuHeading">
-              <h2>Here is your Haiku</h2>
-              <p># Syllable(s) left</p>
-            </div>
-            <div className="haikuLine">
-              <p>{haikuLine1}</p>
-              <p>{line1}</p>
-            </div>
-            <div className="haikuLine">
-              <p>{haikuLine2}</p>
-              <p>{line2}</p>
-            </div>
-            <div className="haikuLine">
-              <p>{haikuLine3}</p>
-              <p>{line3}</p>
-            </div>
-          </div> 
-          </>
+        {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
+        <main>
+          <UserForm 
+            searchedWord={searchedWord}
+            setSearchedWord={setSearchedWord}
+            userInput={userInput}
+            setUserInput={setUserInput}
+            handleAddToHaiku={handleAddToHaiku}
+          />
+          {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
+          <RecommendedWords
+            currentLine={currentLine}
+            line1={line1}
+            line2={line2}
+            line3={line3}
+            userInput={userInput}
+            setUserInput={setUserInput}
+          />
+
+        {appearHaiku ?
+          <>
+          {showAlert === true
+          ? <Alerts setShowAlert={setShowAlert} setUserInput={setUserInput}/>
           : null}
-        </main>
-      </div> 
+          
+            <div className="haiku">
+              <div className="haikuHeading">
+                <h2>Here is your Haiku</h2>
+                <p># Syllable(s) left</p>
+              </div>
+              <div className="haikuLine">
+                <div className="line">
+                  <p>{haikuLine1}</p>
+                </div>
+                <div className="numbers">
+                  <p>{line1}</p>
+                </div>
+              </div>
+              <div className="haikuLine">
+                <div className="line">
+                  <p>{haikuLine2}</p>
+                </div>
+                <div className="numbers">
+                  <p>{line2}</p>
+                </div>
+              </div>
+              <div className="haikuLine">
+                <div className="line">
+                  <p>{haikuLine3}</p>
+                </div>
+                <div className="numbers">
+                  <p>{line3}</p>
+                </div>
+              </div>
+            </div> 
+            </>
+            : null}
+          </main>
+        </div> 
+      </div>
     </div>
   );
 }
