@@ -1,66 +1,213 @@
-@import './variables';
+@import "./setup";
+@import "./mixinsVariables";
+@import "./alerts";
 
-// Fonts
-// font-family: 'Barlow', sans-serif;
-// font-family: 'Merienda', cursive;
+// *******************************
+//         general styling
+// *******************************
 
 .App {
   text-align: center;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.content {
+  margin-top: 50px;
+  padding: 20px 0;
+  background-color: #30302fd3;
+  // background-image: linear-gradient(315deg, #bcbca6 0%, #bcbca6b8 74%, );
+}
+
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.wrapper {
+  @include wrapper(90%);
 }
 
 body {
   font-size: 125%;
   font-family: $base-font;
+  background-color: #bcbca6d0;
 }
 
 li {
   list-style: none;
 }
 
-.wrapper {
-  max-width: 1280px;
-  width: 90%;
-  margin: 0 auto;
+a {
+  text-decoration: none;
 }
 
 a,
 li,
-ul, 
+ul,
 h1,
 p {
   padding: 0;
   margin: 0;
 }
 
-// Header Styles
-h1 {
-  font-family: $heading-font;
-  margin: 40px 0;
-  font-size: 4rem;
-}
-
 button {
   padding: 8px 12px;
   margin: 10px 5px;
   text-transform: uppercase;
+  background-color: $secondary;
+  border: 2px solid $secondary;
+  border-radius: 5px;
+  color: $tertiary;
+  transition: all 0.2s;
 }
 
-input {
-  padding: 8px 12px;
+button:hover,
+button:focus {
+  box-shadow: 0 3px $primary;
 }
 
-.haiku {
-  div {
-    justify-content: center;
-    align-items: center;
-    display: flex;
+p {
+  @include fontStyles(1.2rem, normal, $primary, $base-font);
+}
+
+// *******************************
+//         heading styling
+// *******************************
+
+h1 {
+  @include fontStyles(4rem, normal, $secondary, $heading-font);
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  margin: 40px 0;
+}
+
+h2 {
+  @include fontStyles(2rem, normal, $secondary, $heading-font);
+  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+}
+
+// *******************************
+//         main styling
+// *******************************
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  label {
+    @include fontStyles(1.3rem, normal, $primary, $base-font);
+    width: 100%;
+    font-weight: bold;
+    margin: 15px 0;
   }
-  p {
-    margin: 10px;
+  input {
+    padding: 8px 12px;
+    background-color: whitesmoke;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: all 0.3s;
+  }
+  input:hover,
+  input:focus {
+    box-shadow: 0 5px $primary;
   }
 }
 
 .addToHaiku {
+  padding: 0;
   cursor: pointer;
-  color: $tertiary;
+  color: $secondary;
+  background-color: transparent;
+  border: none;
+  text-transform: capitalize;
+  @include fontStyles(1.5rem, italic, $secondary, $base-font);
+}
+
+// *******************************
+//         suggestedWord styling
+// *******************************
+
+.suggestedWords {
+  @include fontStyles(1.5rem, normal, $primary, $base-font);
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    .returnedWords {
+      padding: 10px 20px;
+    }
+  }
+}
+
+// *******************************
+//         haiku styling
+// *******************************
+
+.haiku {
+  .haikuHeading {
+    p {
+      margin-left: 68%;
+    }
+  }
+  .haikuLine {
+    justify-content: space-between;
+    display: flex;
+  }
+  p {
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+.numbers {
+  width: 30%;
+}
+
+.line {
+  width: 65%;
+}
+.fadeInUp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px transparent solid;
+  border-radius: 5px;
+  animation-name: fadeInUp;
+  animation-duration: 4s;
+  animation-fill-mode: both;
+  width: 50%;
+  margin-left: 27%;
+  margin-top: 2%;
+  p {
+    @include fontStyles(1.6rem, normal, $primary, $base-font);
+    color: $secondary;
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animation {
+  margin-left: 45%;
 }

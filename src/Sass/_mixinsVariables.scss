@@ -1,0 +1,19 @@
+$base-font: 'Barlow', sans-serif;
+$heading-font: 'Merienda', cursive;
+
+$primary: #CDC4B9;
+$secondary: #bcbca6;
+$tertiary: #545152;
+
+@mixin wrapper ($width){
+  max-width: 1280px;
+  width: ($width);
+  margin: 0 auto;
+}
+
+@mixin fontStyles ($size, $style: normal, $color: $primary, $font) {
+  font-size: $size;
+  font-style: $style;
+  color: $color;
+  font-family: $font;
+}
