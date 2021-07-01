@@ -22,6 +22,14 @@
 
 .line {
   width: 65%;
+  p {
+    text-transform: capitalize;
+    @include fontStyles(1.8rem, normal, $secondary, $base-font);
+    text-shadow: 1px 0 0 #000,
+    0 -1px 0 #000,
+    0 1px 0 #000,
+    -1px 0 0 #000;
+  }
 }
 .fadeInUp {
   display: flex;
@@ -55,5 +63,6 @@
   }
 }
 .animation {
-  margin-left: 45%;
+  display: flex;
+  justify-content: center;
 }

@@ -155,6 +155,7 @@ function App() {
           </main>
         </div> {/* content div */}
       </div> {/* wrapper div */}
+      <Footer />
     </div> //App div
   );
 }
