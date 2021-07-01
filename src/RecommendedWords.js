@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUserInput } ) {
+function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUserInput, setSearchedWord } ) {
 
   //  // for second APi call
   // const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
@@ -54,6 +54,12 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
     console.log('this is this', filteredSuggestedWords);
   }
 
+function addRecommendedWord (newWord) {
+  console.log(newWord);
+  setUserInput(newWord.word);
+  setSearchedWord([newWord]);
+}
+
   return (
     <div className="suggestedWords">
       {
@@ -63,7 +69,9 @@ function RecommendedWords( { currentLine, line1, line2, line3, userInput, setUse
             filterFrequentFollow.map((wordSuggestion, index) => {
               return (
                 <li className="returnedWords" key={index}>
+                  <button onClick={() => { addRecommendedWord(wordSuggestion) }}>
                   {wordSuggestion.word}
+                  </button>
                 </li>
               )
             })
