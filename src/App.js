@@ -5,6 +5,8 @@ import Alerts from './Alerts';
 import './Sass/App.scss';
 import { useState } from "react";
 import bg from './Assets/bg.mp4'
+import Lottie from "lottie-react"; // importing Lottie library
+import animation from "./animation.json"; //importing animation file
 
 function App() {
   // state to handle the word the user is searching
@@ -137,7 +139,7 @@ function App() {
               </div>
               {
             doneMsg 
-            ? <div className="fadeInUp"><p>Congratulation your Haiku is done</p></div>
+            ? <section><div className="fadeInUp"><p>Congratulation your Haiku is done</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
             : null
           }
             </div> 
