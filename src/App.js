@@ -5,6 +5,7 @@ import Alerts from './Alerts';
 import './Sass/App.scss';
 import { useState } from "react";
 import bg from './Assets/bg.mp4'
+import ConfirmWord from './ConfirmWord';
 
 function App() {
   // state to handle the word the user is searching
@@ -21,6 +22,7 @@ function App() {
   const [haikuLine3, setHaikuLine3] = useState('')
   const [appearHaiku, setAppearHaiku] = useState(false)
   const [showAlert, setShowAlert] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const updateHaiku = () => {
     setAppearHaiku(true)
@@ -80,11 +82,10 @@ function App() {
         {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
         <main>
           <UserForm 
-            searchedWord={searchedWord}
             setSearchedWord={setSearchedWord}
             userInput={userInput}
             setUserInput={setUserInput}
-            handleAddToHaiku={handleAddToHaiku}
+            setIsLoading={setIsLoading}
           />
           {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
           <RecommendedWords
@@ -94,7 +95,13 @@ function App() {
             line3={line3}
             userInput={userInput}
             setUserInput={setUserInput}
-              setSearchedWord={setSearchedWord}
+            setSearchedWord={setSearchedWord}
+          />
+
+          <ConfirmWord
+            searchedWord={searchedWord}
+            handleAddToHaiku={handleAddToHaiku}
+            isLoading={isLoading}
           />
 
         {appearHaiku ?
