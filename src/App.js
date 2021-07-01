@@ -18,7 +18,7 @@ function App() {
   const [haikuLine1, setHaikuLine1] = useState('')
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
-  const [apperHaiku, setAppearHaiku] = useState(false)
+  const [appearHaiku, setAppearHaiku] = useState(false)
 
   const updateHaiku = () => {
     setAppearHaiku(true)
@@ -94,7 +94,7 @@ function App() {
           setUserInput={setUserInput}
         />
       
-      {apperHaiku ?
+      {appearHaiku ?
           <div className="haiku">
             <div className="haikuHeading">
               <h2>Here is your Haiku</h2>

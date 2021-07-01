@@ -72,6 +72,7 @@ button {
 button:hover,
 button:focus {
   box-shadow: 0 3px $primary;
+  background-color: $primary;
 }
 
 p {
@@ -79,7 +80,7 @@ p {
 }
 
 // *******************************
-//         heading styling
+//         headings styling
 // *******************************
 
 h1 {
