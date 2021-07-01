@@ -118,32 +118,48 @@ function App() {
             <div className="haiku">
               <div className="haikuHeading">
                 <h2>Here is your Haiku</h2>
-                <p># Syllable(s) left</p>
+                
               </div>
-              <div className="haikuLine">
+            
+              {/* <div className="haikuLine">
                 <div className="line">
-                  <p>{haikuLine1}</p>
+                  
                 </div>
                 <div className="numbers">
+                  
+                </div>
+              </div> */}
+              <div className="haikuContainer">
+                <div className="haikuAllLines">
+                      <p>{haikuLine1}</p>
+                      <p>{haikuLine2}</p>
+                      <p>{haikuLine3}</p>
+                </div>
+
+                <div className="haikuSyllables">
+                  <p># Syllable(s) left</p>
                   <p>{line1}</p>
-                </div>
-              </div>
-              <div className="haikuLine">
-                <div className="line">
-                  <p>{haikuLine2}</p>
-                </div>
-                <div className="numbers">
                   <p>{line2}</p>
-                </div>
-              </div>
-              <div className="haikuLine">
-                <div className="line">
-                  <p>{haikuLine3}</p>
-                </div>
-                <div className="numbers">
                   <p>{line3}</p>
                 </div>
               </div>
+              
+              {/* <div className="haikuLine">
+                <div className="line">
+                  
+                </div>
+                <div className="numbers">
+                  
+                </div>
+              </div>
+              <div className="haikuLine">
+                <div className="line">
+                  
+                </div>
+                <div className="numbers">
+                  
+                </div>
+              </div> */}
               {
                 doneMsg 
                 ? <section><div className="fadeInUp"><p>Congratulations! Your Haiku is done!</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
@@ -155,6 +171,7 @@ function App() {
           </main>
         </div> {/* content div */}
       </div> {/* wrapper div */}
+      <Footer />
     </div> //App div
   );
 }

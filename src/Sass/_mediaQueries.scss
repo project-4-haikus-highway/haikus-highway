@@ -1,0 +1,17 @@
+@media (max-width: 720px){
+  span {
+    display: block;
+  }
+
+  .content {
+    padding-bottom: 43px;
+  }
+
+  footer {
+    height: 43px;
+    p,
+    a {
+      font-size: 0.75rem;
+    }
+  }
+}
