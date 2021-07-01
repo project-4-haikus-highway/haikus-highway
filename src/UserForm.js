@@ -51,7 +51,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
       
       <form action="submit" onSubmit={handleSubmit}>
         <label htmlFor="">Please enter a word to make haiku</label>
-        <input type="text" value={userInput} onChange={handleChange} placeholder="Hey.."/>
+        <input type="text" value={userInput} onChange={handleChange} pattern="[A-Za-z]+" placeholder="Hey.."/>
         <button type="submit">Search</button>
       </form>
       {
@@ -63,7 +63,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
             return (
               <li key={index}>
                 <p>Click on the word to add to your haiku</p>
-                <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
+                <button onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</button>
               </li>
             )
           })
