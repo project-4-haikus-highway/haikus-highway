@@ -1,12 +1,12 @@
 import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
 import Alerts from './Alerts';
-// import MakeHaiku from './MakeHaiku';
 import './Sass/App.scss';
 import { useState } from "react";
 import bg from './Assets/bg.mp4'
-import Lottie from "lottie-react"; // importing Lottie library
-import animation from "./animation.json"; //importing animation file
+import ConfirmWord from './ConfirmWord';
+import Lottie from "lottie-react";
+import animation from "./animation.json";
 
 function App() {
   // state to handle the word the user is searching
@@ -22,18 +22,16 @@ function App() {
   const [haikuLine2, setHaikuLine2] = useState('')
   const [haikuLine3, setHaikuLine3] = useState('')
   const [appearHaiku, setAppearHaiku] = useState(false)
-<<<<<<< HEAD
-=======
   const [showAlert, setShowAlert] = useState(false)
   const [doneMsg, setDoneMsg] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
->>>>>>> main
 
   const updateHaiku = () => {
     setAppearHaiku(true)
+    console.log('updated?', userInput);
     const usedSyllables = searchedWord[0]['numSyllables']
-    // const usedWord = searchedWord[0]['word']
-    // console.log('this is searchedWord', searchedWord[0]['numSyllables'])
+  
 
     if ((line1 - usedSyllables) > 0 && currentLine === 1){
       setLine1(line1 - usedSyllables)
@@ -87,11 +85,10 @@ function App() {
         {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
         <main>
           <UserForm 
-            searchedWord={searchedWord}
             setSearchedWord={setSearchedWord}
             userInput={userInput}
             setUserInput={setUserInput}
-            handleAddToHaiku={handleAddToHaiku}
+            setIsLoading={setIsLoading}
           />
           {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
           <RecommendedWords
@@ -101,55 +98,15 @@ function App() {
             line3={line3}
             userInput={userInput}
             setUserInput={setUserInput}
+            setSearchedWord={setSearchedWord}
           />
 
-<<<<<<< HEAD
-      <div className="content wrapper">
-        <header>
-          <h1>Haikus Highway</h1>
-        </header>
-      
-      {/* MOUNTING USERFORM COMPONENT AND PASSING THE PROPS */}
-      <main>
-        <UserForm 
-          searchedWord={searchedWord}
-          setSearchedWord={setSearchedWord}
-          userInput={userInput}
-          setUserInput={setUserInput}
-          handleAddToHaiku={handleAddToHaiku}
-        />
-        {/* MOUNTING RECOMMENDEDWORDS COMPONENT AND PASSING THE PROPS */}
-        <RecommendedWords
-          currentLine={currentLine}
-          line1={line1}
-          line2={line2}
-          line3={line3}
-          userInput={userInput}
-          setUserInput={setUserInput}
-        />
-      
-      {appearHaiku ?
-          <div className="haiku">
-            <div className="haikuHeading">
-              <h2>Here is your Haiku</h2>
-              <p># Syllable(s) left</p>
-            </div>
-            <div className="haikuLine">
-              <p>{haikuLine1}</p>
-              <p>{line1}</p>
-            </div>
-            <div className="haikuLine">
-              <p>{haikuLine2}</p>
-              <p>{line2}</p>
-            </div>
-            <div className="haikuLine">
-              <p>{haikuLine3}</p>
-              <p>{line3}</p>
-            </div>
-          </div> : <></>}
-        </main>
-      </div> 
-=======
+          <ConfirmWord
+            searchedWord={searchedWord}
+            handleAddToHaiku={handleAddToHaiku}
+            isLoading={isLoading}
+          />
+
         {appearHaiku ?
           <>
           {
@@ -198,7 +155,6 @@ function App() {
           </main>
         </div> 
       </div>
->>>>>>> main
     </div>
   );
 }
