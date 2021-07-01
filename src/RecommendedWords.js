@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUserInput, setSearchedWord } ) {
+function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUserInput, setSearchedWord, loadDisplay } ) {
 
   //  // for second APi call
   // const [frequentlyFollowed, setFrequentlyFollowed] = useState([])
@@ -10,6 +10,7 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
   const [filterFrequentFollow, setFilterFrequentFollow] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [errorMessage, setErrorMessage] = useState(false)
+  const [recommendedInstructions, setRecommendedInstructions] = useState(true)
   
 
   useEffect( () => {
@@ -43,30 +44,42 @@ function RecommendedWords({ currentLine, line1, line2, line3, userInput, setUser
         }))
         if (filteredSuggestedWords.length >= 1){
           setErrorMessage(false)
+          setRecommendedInstructions(true)
           for(let i = 0; i < 10; i++){
             tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
           }
-        } else {setErrorMessage(true)}
+        } else {
+          setErrorMessage(true)
+          setRecommendedInstructions(false)
+        }
       } else if (currentLine === 2) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line2)
         }))
         if (filteredSuggestedWords.length >= 1){
           setErrorMessage(false)
+          setRecommendedInstructions(true)
           for(let i = 0; i < 10; i++){
             tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
           }
-        } else {setErrorMessage(true)}
+        } else {
+          setErrorMessage(true)
+          setRecommendedInstructions(false)
+        }
       } else if (currentLine === 3) {
         filteredSuggestedWords = suggestedWords.filter((wordArray => {
           return (wordArray.numSyllables <= line3)
         }))
         if (filteredSuggestedWords.length >= 1){
           setErrorMessage(false)
+          setRecommendedInstructions(true)
           for(let i = 0; i < 10; i++){
             tenFilteredSuggestedWords.push(filteredSuggestedWords[i])
           }
-        } else {setErrorMessage(true)}
+        } else {
+          setErrorMessage(true)
+          setRecommendedInstructions(false)
+        }
       }
       console.log(tenFilteredSuggestedWords)
       setFilterFrequentFollow(tenFilteredSuggestedWords);
@@ -84,9 +97,15 @@ function addRecommendedWord (newWord) {
       {
         isLoading ? <p>Loading...</p> :
         <>
-          <p className="recWordTitle noShow">
-              Here are the recomended words
-          </p>
+          {
+            errorMessage ? 
+              <p id="errorMessage" className={"recWordTitle" + (loadDisplay ? " noDisplay" : "")}>
+                Couldn't find any recommended words, sorry!
+              </p> : 
+              <p id="errorMessage"className={"recWordTitle" + (loadDisplay ? " noDisplay" : "")}>
+                Here are some recommended words! Click them to continue building your Haiku!
+              </p>
+          }
           <ul>
             {
               filterFrequentFollow.map((wordSuggestion, index) => {
@@ -103,7 +122,6 @@ function addRecommendedWord (newWord) {
         </>
 
       }
-      {errorMessage ? <p id="errorMessage" className="otherClass, noDisplay">Couldn't Find Any Words, Sorry!</p> : <div id="errorMessage"></div>}
     </div>
   )
 } 

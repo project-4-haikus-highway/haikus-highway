@@ -2,7 +2,7 @@ import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
 import Alerts from './Alerts';
 import './Sass/App.scss';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import bg from './Assets/bg.mp4'
 import ConfirmWord from './ConfirmWord';
 import Lottie from "lottie-react";
@@ -25,6 +25,7 @@ function App() {
   const [showAlert, setShowAlert] = useState(false)
   const [doneMsg, setDoneMsg] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [loadDisplay, setLoadDisplay] = useState(true)
 
 
   const updateHaiku = () => {
@@ -68,9 +69,7 @@ function App() {
     event.preventDefault();
     console.log('i have been clicked')
     updateHaiku();
-    if (document.getElementById("errorMessage").classList.contains("noDisplay")){
-      document.getElementById("errorMessage").classList.remove("noDisplay");
-    }
+    setLoadDisplay(false)
   }
 
   return (
@@ -102,6 +101,7 @@ function App() {
             userInput={userInput}
             setUserInput={setUserInput}
             setSearchedWord={setSearchedWord}
+            loadDisplay={loadDisplay}
           />
 
           <ConfirmWord
@@ -149,7 +149,7 @@ function App() {
               </div>
               {
             doneMsg 
-            ? <section><div className="fadeInUp"><p>Congratulation your Haiku is done</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
+            ? <section><div className="fadeInUp"><p>Congratulations! Your Haiku is done!</p></div><div className="animation"><Lottie animationData={animation} loop={false} style={{ width: 200, height: 200}}/></div></section>
             : null
           }
             </div> 
