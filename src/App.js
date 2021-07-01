@@ -67,6 +67,9 @@ function App() {
     event.preventDefault();
     console.log('i have been clicked')
     updateHaiku();
+    if (document.getElementById("errorMessage").classList.contains("noDisplay")){
+      document.getElementById("errorMessage").classList.remove("noDisplay");
+    }
   }
 
   return (
