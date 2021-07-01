@@ -1,0 +1,27 @@
+.alertParent {
+  position: fixed;
+  top: 40vh;
+  right: 25vw;
+  left: 25vw;
+}
+
+.alert {
+  height: 50%;
+  background-color: $tertiary;
+  border: solid black 1px;
+  border-radius: 10px;
+  padding: 40px;
+  position: relative;
+  button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: none;
+    color: white;
+    background: transparent;
+    cursor: pointer;
+  }
+  button:hover {
+    color: $secondary;
+  }
+}

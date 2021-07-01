@@ -1,6 +1,6 @@
-@import './setup';
-@import './mixinsVariables';
-
+@import "./setup";
+@import "./mixinsVariables";
+@import "./alerts";
 
 // *******************************
 //         general styling
@@ -16,7 +16,7 @@
   height: 100%;
 }
 .content {
-  // margin-top: 50%;
+  margin-top: 50px;
   padding: 20px 0;
   background-color: #30302fd3;
   // background-image: linear-gradient(315deg, #bcbca6 0%, #bcbca6b8 74%, );
@@ -39,6 +39,7 @@ video {
 body {
   font-size: 125%;
   font-family: $base-font;
+  background-color: #bcbca6d0;
 }
 
 li {
@@ -51,7 +52,7 @@ a {
 
 a,
 li,
-ul, 
+ul,
 h1,
 p {
   padding: 0;
@@ -76,7 +77,7 @@ button:focus {
 }
 
 p {
-  @include fontStyles (1.2rem, normal, $primary, $base-font);
+  @include fontStyles(1.2rem, normal, $primary, $base-font);
 }
 
 // *******************************
@@ -84,13 +85,13 @@ p {
 // *******************************
 
 h1 {
-  @include fontStyles (4rem, normal, $secondary, $heading-font);
+  @include fontStyles(4rem, normal, $secondary, $heading-font);
   text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
   margin: 40px 0;
 }
 
 h2 {
-  @include fontStyles (2rem, normal, $secondary, $heading-font);
+  @include fontStyles(2rem, normal, $secondary, $heading-font);
   text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
@@ -103,9 +104,10 @@ form {
   align-items: center;
   flex-wrap: wrap;
   label {
-    @include fontStyles (1.3rem, normal, $primary, $base-font);
+    @include fontStyles(1.3rem, normal, $primary, $base-font);
     width: 100%;
     font-weight: bold;
+    margin: 15px 0;
   }
   input {
     padding: 8px 12px;
@@ -128,7 +130,7 @@ form {
   background-color: transparent;
   border: none;
   text-transform: capitalize;
-  @include fontStyles (1.5rem, italic, $secondary, $base-font);
+  @include fontStyles(1.5rem, italic, $secondary, $base-font);
 }
 
 // *******************************
@@ -136,11 +138,12 @@ form {
 // *******************************
 
 .suggestedWords {
-  @include fontStyles (1.5rem, normal, $primary, $base-font);
+  @include fontStyles(1.5rem, normal, $primary, $base-font);
   ul {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     .returnedWords {
       padding: 10px 20px;
     }
@@ -154,16 +157,58 @@ form {
 .haiku {
   .haikuHeading {
     p {
-      margin-left: 50%;
+      margin-left: 68%;
     }
   }
   .haikuLine {
-    justify-content: space-around;
+    justify-content: space-between;
     display: flex;
   }
   p {
     margin: 10px 0;
     font-weight: bold;
+    text-align: center;
   }
-  
+}
+
+.numbers {
+  width: 30%;
+}
+
+.line {
+  width: 65%;
+}
+.fadeInUp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px transparent solid;
+  border-radius: 5px;
+  animation-name: fadeInUp;
+  animation-duration: 4s;
+  animation-fill-mode: both;
+  width: 50%;
+  margin-left: 27%;
+  margin-top: 2%;
+  p {
+    @include fontStyles(1.6rem, normal, $primary, $base-font);
+    color: $secondary;
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animation {
+  margin-left: 45%;
 }
