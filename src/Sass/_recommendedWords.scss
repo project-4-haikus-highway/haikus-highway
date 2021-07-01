@@ -1,0 +1,21 @@
+.suggestedWords {
+  ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    .returnedWords {
+      padding: 10px 20px;
+      button {
+        padding: 6px 10px;
+        border-bottom: 2px solid transparent;
+        background-color: transparent;
+        @include fontStyles (1.3rem, normal, $primary, $base-font);
+      }
+      button:hover,
+      button:focus {
+        border-bottom: 2px solid $secondary;
+      }
+    }
+  }
+}

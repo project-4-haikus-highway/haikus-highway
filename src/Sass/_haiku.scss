@@ -1,0 +1,59 @@
+
+.haiku {
+  .haikuHeading {
+    p {
+      margin-left: 68%;
+    }
+  }
+  .haikuLine {
+    justify-content: space-between;
+    display: flex;
+  }
+  p {
+    margin: 10px 0;
+    font-weight: bold;
+    text-align: center;
+  }
+}
+
+.numbers {
+  width: 30%;
+}
+
+.line {
+  width: 65%;
+}
+.fadeInUp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px transparent solid;
+  border-radius: 5px;
+  animation-name: fadeInUp;
+  animation-duration: 4s;
+  animation-fill-mode: both;
+  width: 50%;
+  margin-left: 27%;
+  margin-top: 2%;
+  p {
+    @include fontStyles(1.6rem, normal, $primary, $base-font);
+    color: $secondary;
+  }
+}
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  50% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animation {
+  margin-left: 45%;
+}
