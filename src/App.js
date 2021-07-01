@@ -2,7 +2,7 @@ import UserForm from './UserForm';
 import RecommendedWords from './RecommendedWords';
 import Alerts from './Alerts';
 import './Sass/App.scss';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import bg from './Assets/bg.mp4'
 import ConfirmWord from './ConfirmWord';
 import Lottie from "lottie-react";
