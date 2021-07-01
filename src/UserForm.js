@@ -63,7 +63,7 @@ function UserForm( {searchedWord, setSearchedWord, userInput, setUserInput, hand
             return (
               <li key={index}>
                 <p>Click on the word to add to your haiku</p>
-                <p onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</p>
+                <button onClick={handleAddToHaiku} className="addToHaiku">{returnedWord.word}</button>
               </li>
             )
           })
