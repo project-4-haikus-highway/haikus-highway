@@ -1,13 +1,13 @@
-import UserForm from './UserForm';
-import RecommendedWords from './RecommendedWords';
-import Alerts from './Alerts';
+import UserForm from './js/UserForm';
+import RecommendedWords from './js/RecommendedWords';
+import Alerts from './js/Alerts';
 import './Sass/App.scss';
 import { useState } from "react";
 import bg from './Assets/bg.mp4'
-import ConfirmWord from './ConfirmWord';
+import ConfirmWord from './js/ConfirmWord';
 import Lottie from "lottie-react";
 import animation from "./animation.json";
-import Footer from "./Footer";
+import Footer from "./js/Footer";
 
 function App() {
   // to handle the word the user is searching
